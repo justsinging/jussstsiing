@@ -19,48 +19,204 @@
   padding: 10px;
   text-align: center;
 }
+    <style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #fdfcfc;
+    color: #36000b;
+  }
+
+  header {
+    background-color: #6b0014;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 1.8em;
+  }
+
+  header p {
+    margin: 4px 0 0;
+    font-size: 0.9em;
+    font-weight: 300;
+  }
+
+  #productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 40px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .producto {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .producto img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  .producto h3 {
+    font-size: 1.1em;
+    margin: 10px 0 5px;
+  }
+
+  .producto p {
+    font-size: 0.95em;
+    margin: 4px 0 12px;
+  }
+
+  .producto button {
+    background-color: #6b0014;
+    color: white;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .producto button:hover {
+    background-color: white;
+    color: #6b0014;
+    border: 2px solid #6b0014;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #6b0014;
+    margin-top: 30px;
+  }
+
+  .notificacion {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #6b0014;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: aparecer 0.3s ease;
+  }
+
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Estilos para carrito, formulario, etc. los puedo extender si querés */
+
   </style>
 </head>
 <body>
 
 <!-- Sección de productos -->
 <div id="productos">
-  <div>
-    <p>Bolsa Florero</p>
-    <button onclick="agregarAlCarrito({ id: 1, nombre: 'Bolsa Florero', precio: 25000 })">Agregar al carrito</button>
+   <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa Florero">
+    <h3>Bolsa Florero</h3>
+    <p>$25.000</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
-  <div>
-    <p>Bolsa Mujer</p>
-    <button onclick="agregarAlCarrito({ id: 2, nombre: 'Bolsa Mujer', precio: 16500 })">Agregar al carrito</button>
+  ...
+</div>
+ <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa Mujer">
+    <h3>Bolsa Mujer</h3>
+    <p>$13.500</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
-  <div>
-    <p>Bolsa Lluvia</p>
-    <button onclick="agregarAlCarrito({ id: 3, nombre: 'Bolsa Lluvia', precio: 13000 })">Agregar al carrito</button>
+  ...
+</div>
+  <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa Lluvia">
+    <h3>Bolsa Lluvia</h3>
+    <p>$14.500</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
+  ...
+</div>
   <div>
-    <p>Bolsa Lavanda</p>
-    <button onclick="agregarAlCarrito({ id: 4, nombre: 'Bolsa Lavanda', precio: 18500 })">Agregar al carrito</button>
+    <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa Lavanda">
+    <h3>Bolsa Lavanda</h3>
+    <p>$16.500</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
+  ...
+</div>
+
   <div>
-    <p>Bolsa Patö</p>
-    <button onclick="agregarAlCarrito({ id: 5, nombre: 'Bolsa Patö', precio: 11500 })">Agregar al carrito</button>
+   <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa Patö">
+    <h3>Bolsa Patö</h3>
+    <p>$11.5000</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
+  ...
+</div>
+
   <div>
-    <p>Bolsa Mida</p>
-    <button onclick="agregarAlCarrito({ id: 6, nombre: 'Bolsa Mida', precio: 20000 })">Agregar al carrito</button>
+    <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa Mida">
+    <h3>Bolsa Mida</h3>
+    <p>$20.000</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
-  <div>
-    <p>Bolsa Olivo</p>
-    <button onclick="agregarAlCarrito({ id: 7, nombre: 'Bolsa Olivo', precio: 13000 })">Agregar al carrito</button>
+  ...
+</div>
+
+  <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa Olivo">
+    <h3>Bolsa Olivo</h3>
+    <p>$13.000</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
-  <div>
-    <p>Bolsa 13</p>
-    <button onclick="agregarAlCarrito({ id:8, nombre: 'Bolsa 13', precio: 13000 })">Agregar al carrito</button>
+  ...
+</div>
+
+  <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa 13">
+    <h3>Bolsa 13</h3>
+    <p>$13.000</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
-  <div>
-    <p>Bolsa Frutis</p>
-    <button onclick="agregarAlCarrito({ id: 9, nombre: 'Bolsa Frutis', precio: 14000 })">Agregar al carrito</button>
+  ...
+</div>
+
+  <div id="productos">
+  <div class="producto">
+    <img src="tu-imagen.jpg" alt="Bolsa Frutis">
+    <h3>Bolsa Frutis</h3>
+    <p>$15.000</p>
+    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
   </div>
+  ...
+</div>
+
   <!-- más productos... -->
 </div>
 
