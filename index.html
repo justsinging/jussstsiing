@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Just Sing</title>
+  <style>
+    .btn { padding: 8px 12px; margin: 5px; background: #000; color: white; border: none; cursor: pointer; }
+    .error { color: red; font-size: 0.9em; }
+    .notificacion { position: fixed; bottom: 10px; right: 10px; background: #333; color: white; padding: 10px; border-radius: 5px; }
+#productos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 20px;
+}
+#productos > div {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+  </style>
+</head>
+<body>
+
+<!-- Sección de productos -->
+<div id="productos">
+  <div>
+    <p>Bolsa Florero</p>
+    <button onclick="agregarAlCarrito({ id: 1, nombre: 'Bolsa Florero', precio: 25000 })">Agregar al carrito</button>
+  </div>
+  <div>
+    <p>Bolsa Mujer</p>
+    <button onclick="agregarAlCarrito({ id: 2, nombre: 'Bolsa Mujer', precio: 16500 })">Agregar al carrito</button>
+  </div>
+  <div>
+    <p>Bolsa Lluvia</p>
+    <button onclick="agregarAlCarrito({ id: 3, nombre: 'Bolsa Lluvia', precio: 13000 })">Agregar al carrito</button>
+  </div>
+  <div>
+    <p>Bolsa Lavanda</p>
+    <button onclick="agregarAlCarrito({ id: 4, nombre: 'Bolsa Lavanda', precio: 18500 })">Agregar al carrito</button>
+  </div>
+  <div>
+    <p>Bolsa Patö</p>
+    <button onclick="agregarAlCarrito({ id: 5, nombre: 'Bolsa Patö', precio: 11500 })">Agregar al carrito</button>
+  </div>
+  <div>
+    <p>Bolsa Mida</p>
+    <button onclick="agregarAlCarrito({ id: 6, nombre: 'Bolsa Mida', precio: 20000 })">Agregar al carrito</button>
+  </div>
+  <div>
+    <p>Bolsa Olivo</p>
+    <button onclick="agregarAlCarrito({ id: 7, nombre: 'Bolsa Olivo', precio: 13000 })">Agregar al carrito</button>
+  </div>
+  <div>
+    <p>Bolsa 13</p>
+    <button onclick="agregarAlCarrito({ id:8, nombre: 'Bolsa 13', precio: 13000 })">Agregar al carrito</button>
+  </div>
+  <div>
+    <p>Bolsa Frutis</p>
+    <button onclick="agregarAlCarrito({ id: 9, nombre: 'Bolsa Frutis', precio: 14000 })">Agregar al carrito</button>
+  </div>
+  <!-- más productos... -->
+</div>
+
+<!-- Botón de carrito -->
+<button id="toggle-carrito" class="btn">🛒 Carrito</button>
+
+<!-- Carrito -->
+<div id="carrito" style="display:none;">
+  <h2>Carrito</h2>
+  <ul id="lista-carrito"></ul>
+  <button id="vaciar-carrito" class="btn">Vaciar carrito</button>
+  <p>Total: $<span id="total"></span></p>
+  <button onclick="mostrarEnvio()" class="btn">Continuar compra</button>
+</div>
+
+<!-- Envío -->
+<div id="seccion-envio" style="display:none;">
+  <h2>Envío</h2>
+  <label><input type="radio" name="envio" value="domicilio" checked onclick="mostrarFormulario('domicilio')"> Correo Argentino (domicilio)</label><br>
+  <label><input type="radio" name="envio" value="sucursal" onclick="mostrarFormulario('sucursal')"> Correo Argentino (sucursal)</label>
+
+  <div id="form-domicilio">
+    <input placeholder="Provincia" required><br>
+    <input placeholder="Localidad" required><br>
+    <input placeholder="Calle y Número" required><br>
+    <input placeholder="Código postal" required><br>
+    <input placeholder="Piso y Dpto (opcional)"><br>
+    <input id="correo" placeholder="Correo Electrónico" required><span id="error-correo" class="error"></span><br>
+    <input placeholder="Nombre y apellido" required><br>
+    <input placeholder="Teléfono" required><br>
+  </div>
+
+  <div id="form-sucursal" style="display:none;">
+    <input placeholder="Provincia" required><br>
+    <input placeholder="Localidad" required><br>
+    <input placeholder="Calle y Número" required><br>
+    <input placeholder="Nombre y apellido" required><br>
+    <input placeholder="Correo Electrónico" required><br>
+    <input placeholder="Teléfono" required><br>
+  </div>
+
+  <button id="volver-carrito" class="btn">Volver al carrito</button>
+  <button onclick="mostrarResumenPedido()" class="btn">Continuar compra</button>
+</div>
+
+<!-- Resumen del pedido -->
+<div id="resumen-pedido" style="display: none;">
+  <h2>Resumen del pedido</h2>
+  <ul id="lista-resumen"></ul>
+  <p>Envío: $<span id="costo-envio"></span></p>
+  <p><strong>Total: $<span id="total-final"></span></strong></p>
+  <button onclick="mostrarPago()" class="btn">Finalizar compra</button>
+</div>
+
+<!-- Pago -->
+<div id="seccion-pago" style="display:none;">
+  <h2>Pago</h2>
+  <label><input type="radio" name="pago" checked> Mercado Pago</label>
+  <p>Aquí va el API de Mercado Pago</p>
+
+  <label><input type="radio" name="pago"> Transferencia bancaria</label>
+  <p>CVU: 0000003100093480929286<br>Alias: JustSing<br>Titular: Just Sing</p>
+
+  <button id="finalizar-compra" class="btn">Finalizar compra</button>
+</div>
+
+<!-- Confirmación -->
+<div id="confirmacion-compra" style="display: none;">
+  <h2>¡Gracias por tu compra!</h2>
+  <p>Te contactaremos al correo proporcionado para confirmar el envío.</p>
+</div>
+
+<!-- Notificaciones -->
+<div id="notificacion" class="notificacion" style="display:none;"></div>
+
+<script>
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let total = 0;
+let costoEnvio = 5000;
+
+function guardarCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function mostrarNotificacion(texto) {
+  const n = document.getElementById("notificacion");
+  n.textContent = texto;
+  n.style.display = "block";
+  setTimeout(() => n.style.display = "none", 3000);
+}
+
+function actualizarCarrito() {
+  const lista = document.getElementById("lista-carrito");
+  lista.innerHTML = "";
+  total = 0;
+  carrito.forEach((p, i) => {
+    const li = document.createElement("li");
+    li.textContent = `${p.nombre} - $${p.precio}`;
+    const btn = document.createElement("button");
+    btn.textContent = "❌";
+    btn.onclick = () => eliminarDelCarrito(p.id);
+    li.appendChild(btn);
+    lista.appendChild(li);
+    total += p.precio;
+  });
+  document.getElementById("total").textContent = total;
+}
+
+function agregarAlCarrito(producto) {
+  if (!carrito.find(p => p.id === producto.id)) {
+    carrito.push(producto);
+    mostrarNotificacion("Producto agregado a tu carrito");
+  } else {
+    mostrarNotificacion("Este producto es único y ya está en tu carrito");
+  }
+  guardarCarrito();
+  actualizarCarrito();
+}
+
+function eliminarDelCarrito(id) {
+  carrito = carrito.filter(p => p.id !== id);
+  guardarCarrito();
+  actualizarCarrito();
+}
+
+function mostrarEnvio() {
+  document.getElementById("carrito").style.display = "none";
+  document.getElementById("seccion-envio").style.display = "block";
+}
+
+function mostrarFormulario(tipo) {
+  document.getElementById("form-domicilio").style.display = tipo === 'domicilio' ? 'block' : 'none';
+  document.getElementById("form-sucursal").style.display = tipo === 'sucursal' ? 'block' : 'none';
+  costoEnvio = tipo === 'domicilio' ? 5000 : 4000;
+}
+
+function mostrarResumenPedido() {
+  document.getElementById("seccion-envio").style.display = "none";
+  const resumen = document.getElementById("lista-resumen");
+  resumen.innerHTML = "";
+  carrito.forEach(producto => {
+    const li = document.createElement("li");
+    li.textContent = producto.nombre;
+    resumen.appendChild(li);
+  });
+  document.getElementById("costo-envio").textContent = costoEnvio;
+  document.getElementById("total-final").textContent = total + costoEnvio;
+  document.getElementById("resumen-pedido").style.display = "block";
+}
+
+function mostrarPago() {
+  document.getElementById("resumen-pedido").style.display = "none";
+  document.getElementById("seccion-pago").style.display = "block";
+}
+
+document.getElementById("toggle-carrito").addEventListener("click", () => {
+  const c = document.getElementById("carrito");
+  c.style.display = c.style.display === "none" ? "block" : "none";
+});
+
+document.getElementById("finalizar-compra").addEventListener("click", () => {
+  document.getElementById("seccion-pago").style.display = "none";
+  document.getElementById("confirmacion-compra").style.display = "block";
+  carrito = [];
+  guardarCarrito();
+});
+
+document.getElementById("vaciar-carrito").addEventListener("click", () => {
+  carrito = [];
+  guardarCarrito();
+  actualizarCarrito();
+  mostrarNotificacion("Carrito vaciado");
+});
+
+document.getElementById("volver-carrito").addEventListener("click", () => {
+  document.getElementById("seccion-envio").style.display = "none";
+  document.getElementById("carrito").style.display = "block";
+});
+
+// Validación simple
+const correoInput = document.getElementById("correo");
+correoInput.addEventListener("blur", () => {
+  const error = document.getElementById("error-correo");
+  if (!correoInput.value.includes("@")) {
+    error.textContent = "Correo inválido";
+  } else {
+    error.textContent = "";
+  }
+});
+
+// Cargar carrito al iniciar
+actualizarCarrito();
+</script>
+</body>
+</html>
