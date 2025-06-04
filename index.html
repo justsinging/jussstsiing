@@ -12,8 +12,8 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  padding: 40px
-  max-width: 1200px
+  padding: 40px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 #productos > div {
@@ -66,7 +66,7 @@
 
   .producto img {
     max-width: 100%;
-    height: 300px
+    height: 300px;
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 15px;
@@ -140,99 +140,64 @@
 <body>
 
 <!-- Sección de productos -->
+<h2>Productos</h2>
 <div id="productos">
-   <div id="productos">
   <div class="producto">
     <img src="https://i.postimg.cc/66cjFV71/IMG-9268.jpg" alt="Bolsa Florero">
     <h3>Bolsa Florero</h3>
     <p>$25.000</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <button onclick="agregarAlCarrito({id: 1, nombre: 'Bolsa Florero', precio: 25000});">Agregar al carrito</button>
   </div>
-  ...
-</div>
- <div id="productos">
   <div class="producto">
     <img src="https://i.imgur.com/cU50TcN.jpeg" alt="Bolsa Mujer">
     <h3>Bolsa Mujer</h3>
     <p>$13.500</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <button onclick="agregarAlCarrito({id: 2, nombre: 'Bolsa Mujer', precio: 13500});">Agregar al carrito</button>
   </div>
-  ...
-</div>
-  <div id="productos">
   <div class="producto">
     <img src="tu-imagen.jpg" alt="Bolsa Lluvia">
     <h3>Bolsa Lluvia</h3>
     <p>$14.500</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <button onclick="agregarAlCarrito({id: 3, nombre: 'Bolsa Lluvia', precio: 14500});">Agregar al carrito</button>
   </div>
-  ...
-</div>
-  <div>
-    <div id="productos">
   <div class="producto">
     <img src="https://i.imgur.com/XVIESt1.jpeg" alt="Bolsa Lavanda">
     <h3>Bolsa Lavanda</h3>
     <p>$16.500</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <button onclick="agregarAlCarrito({id: 4, nombre: 'Bolsa Lavanda', precio: 16500});">Agregar al carrito</button>
   </div>
-  ...
-</div>
-
-  <div>
-   <div id="productos">
   <div class="producto">
     <img src="tu-imagen.jpg" alt="Bolsa Patö">
     <h3>Bolsa Patö</h3>
-    <p>$11.5000</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <p>$11.500</p>
+    <button onclick="agregarAlCarrito({id: 5, nombre: 'Bolsa Patö', precio: 11500});">Agregar al carrito</button>
   </div>
-  ...
-</div>
-
-  <div>
-    <div id="productos">
   <div class="producto">
     <img src="https://i.imgur.com/SQjkk2Y.jpeg" alt="Bolsa Mida">
     <h3>Bolsa Mida</h3>
     <p>$20.000</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <button onclick="agregarAlCarrito({id: 6, nombre: 'Bolsa Mida', precio: 20000});">Agregar al carrito</button>
   </div>
-  ...
-</div>
-
-  <div id="productos">
   <div class="producto">
     <img src="tu-imagen.jpg" alt="Bolsa Olivo">
     <h3>Bolsa Olivo</h3>
     <p>$13.000</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <button onclick="agregarAlCarrito({id: 7, nombre: 'Bolsa Olivo', precio: 13000});">Agregar al carrito</button>
   </div>
-  ...
-</div>
-
-  <div id="productos">
   <div class="producto">
     <img src="https://i.imgur.com/bqt47CU.jpeg" alt="Bolsa 13">
     <h3>Bolsa 13</h3>
     <p>$13.000</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <button onclick="agregarAlCarrito({id: 8, nombre: 'Bolsa 13', precio: 13000});">Agregar al carrito</button>
   </div>
-  ...
-</div>
-
-  <div id="productos">
   <div class="producto">
     <img src="tu-imagen.jpg" alt="Bolsa Frutis">
     <h3>Bolsa Frutis</h3>
     <p>$15.000</p>
-    <button onclick="agregarAlCarrito(...);">Agregar al carrito</button>
+    <button onclick="agregarAlCarrito({id: 9, nombre: 'Bolsa Frutis', precio: 15000});">Agregar al carrito</button>
   </div>
-  ...
 </div>
 
-  <!-- más productos... -->
-</div>
 
 <!-- Botón de carrito -->
 <button id="toggle-carrito" class="btn">🛒 Carrito</button>
