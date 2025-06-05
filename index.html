@@ -236,79 +236,93 @@
 
   <!-- SCRIPT PRINCIPAL -->
   <script>
-    
-        document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('btn-agregar')) {
-    const boton = e.target;
-    const productoId = parseInt(boton.getAttribute('data-id'));
-    const productoNombre = boton.getAttribute('data-nombre');
-    const productoPrecio = parseFloat(boton.getAttribute('data-precio'));
-
-    agregarAlCarrito({
-      id: productoId,
-      nombre: productoNombre,
-      precio: productoPrecio,
-      cantidad: 1
-    });
-  }
-});
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    let costoEnvio = 5000;
+    const costoEnvio = 5000;
     const mp = new MercadoPago('TEST-bf643f67-1adb-4977-a2c2-d6626c5d9d6a',{locale:'es-AR'});
 
-    /* ---------- UTILIDADES ---------- */
-    const qs = s=>document.querySelector(s);
-    const q      = s=>document.querySelector(s);
+    const qs = s => document.querySelector(s);
 
-    function guardarCarrito(){localStorage.setItem('carrito',JSON.stringify(carrito));}
-    function notificar(text){const n=qs('#notificacion');n.textContent=text;n.style.display='block';setTimeout(()=>n.style.display='none',3000);}
+    function guardarCarrito() {
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
 
-    /* ---------- CARRITO ---------- */
-    function toggleCart(){qs('#carrito').classList.toggle('open');}
+    function notificar(text) {
+      const n = qs('#notificacion');
+      n.textContent = text;
+      n.style.display = 'block';
+      setTimeout(() => n.style.display = 'none', 3000);
+    }
 
-   function actualizarCarrito() {
-  const ul = qs('#lista-carrito');
-  ul.innerHTML = '';
-  let total = 0;
+    function toggleCart() {
+      qs('#carrito').classList.toggle('open');
+    }
 
-  carrito.forEach(p => {
-    const li = document.createElement('li');
-    li.textContent = `${p.nombre} - $${(p.precio).toLocaleString('es-AR')}`;
-    
-    const b = document.createElement('button');
-    b.textContent = '❌';
-    b.onclick = () => eliminarDelCarrito(p.id);
-    
-    li.appendChild(b);
-    ul.appendChild(li);
+    function actualizarCarrito() {
+      const ul = qs('#lista-carrito');
+      ul.innerHTML = '';
+      let total = 0;
 
-    total += p.precio;
-  });
+      carrito.forEach(p => {
+        const li = document.createElement('li');
+        li.textContent = `${p.nombre} - $${p.precio.toLocaleString('es-AR')} x ${p.cantidad}`;
 
-  qs('#total').textContent = total.toLocaleString('es-AR');
-}
+        const btnEliminar = document.createElement('button');
+        btnEliminar.textContent = '❌';
+        btnEliminar.onclick = () => eliminarDelCarrito(p.id);
 
-function agregarAlCarrito(producto) {
-  const existente = carrito.find(p => p.id === producto.id);
-  if (existente) {
-    existente.cantidad += 1;
-  } else {
-    producto.cantidad = 1;
-    carrito.push(producto);
-  }
+        li.appendChild(btnEliminar);
+        ul.appendChild(li);
+
+        total += p.precio * p.cantidad;
+      });
+
+      qs('#total').textContent = total.toLocaleString('es-AR');
+    }
+
+    function agregarAlCarrito(producto) {
+      const existente = carrito.find(p => p.id === producto.id);
+      if (existente) {
+        existente.cantidad += 1;
+      } else {
+        carrito.push(producto);
+      }
+      guardarCarrito();
+      actualizarCarrito();
+      notificar(`${producto.nombre} agregado al carrito`);
+    }
+
     function eliminarDelCarrito(id) {
-  carrito = carrito.filter(p => p.id !== id);
-  guardarCarrito();
-  actualizarCarrito();
-  notificar('Producto eliminado del carrito');
-}
+      carrito = carrito.filter(p => p.id !== id);
+      guardarCarrito();
+      actualizarCarrito();
+      notificar('Producto eliminado del carrito');
+    }
 
-  }
-  guardarCarrito();
-  actualizarCarrito();
-  notificar(`${producto.nombre} agregado al carrito`);
-}
-  const botonesAgregar = document.querySelectorAll('.btn-agregar');
+    // Event listener para botones "Agregar al carrito"
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('btn-agregar')) {
+        const boton = e.target;
+        const productoId = parseInt(boton.getAttribute('data-id'));
+        const productoNombre = boton.getAttribute('data-nombre');
+        const productoPrecio = parseFloat(boton.getAttribute('data-precio'));
+
+        agregarAlCarrito({
+          id: productoId,
+          nombre: productoNombre,
+          precio: productoPrecio,
+          cantidad: 1
+        });
+      }
+    });
+
+    // Event listener para botón carrito 🛒
+    qs('.cart-button').addEventListener('click', toggleCart);
+
+    // Inicializar carrito en la página
+    actualizarCarrito();
+  });
 </script>
 </body>
 </html>
