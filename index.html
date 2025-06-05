@@ -142,14 +142,14 @@ header h1 {
   }
 }
 .store-header {
-  background-color: #36000b;
+  background-color: #590214;
   color: white;
   position: relative;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Lexend Giga', serif;
   z-index: 100;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
@@ -195,10 +195,9 @@ header h1 {
 </head>
 <body>
 <header class="store-header">
-  <div class="store-title">TuTienda</div>
+  <div class="store-title">JustSing</div>
   <button class="cart-button" onclick="toggleCart()">🛒</button>
 </header>
-<button onclick="pagarConMercadoPago()">Pagar con Mercado Pago</button>
 
 <!-- Sección de productos -->
 <h2>Productos</h2>
@@ -316,7 +315,8 @@ header h1 {
   <h2>Pago</h2>
   <label><input type="radio" name="pago" checked> Mercado Pago</label>
   <p>Aquí va el API de Mercado Pago</p>
-
+<button onclick="pagarConMercadoPago()">Pagar con Mercado Pago</button>
+  
   <label><input type="radio" name="pago"> Transferencia bancaria</label>
   <p>CVU: 0000003100093480929286<br>Alias: JustSing<br>Titular: Just Sing</p>
 
