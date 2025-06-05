@@ -3,494 +3,217 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Just Sing</title>
-<link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
- 
+  <title>Just Sing</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700&family=Climate+Crisis&display=swap" rel="stylesheet">
+  <!-- Mercado Pago SDK -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+
   <style>
-    .btn { padding: 8px 12px; margin: 5px; background: #000; color: white; border: none; cursor: pointer; }
-    .error { color: red; font-size: 0.9em; }
-    .notificacion { position: fixed; bottom: 10px; right: 10px; background: #333; color: white; padding: 10px; border-radius: 5px; }
-#productos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  padding: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-#productos > div {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
-}
-  body {
-    font-family: 'Climate+Crisis', sans-serif;
-    margin: 0;
-    background-color: #fdfcfc;
-    color: #36000b;
-  }
-header h1 {
-  font-family: 'Lexend+Giga', serif;
-  font-size: 2.2em;
-  letter-spacing: 1px;
-}
-  header {
-    background-color: #6b0014;
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
+    /* ----------  VARIABLES  ---------- */
+    :root{
+      --color-bg:#fdfcfc;
+      --color-primary:#6b0014;
+      --color-primary-dark:#36000b;
+      --color-light:#ffffff;
+      --shadow:0 4px 12px rgba(0,0,0,.1);
+    }
 
-  header h1 {
-    margin: 0;
-    font-size: 1.8em;
-  }
+    /* ----------  RESET / BASE  ---------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Poppins',sans-serif;background:var(--color-bg);color:var(--color-primary-dark);}
+    img{max-width:100%;display:block;border-radius:10px}
+    h2{text-align:center;font-size:2rem;color:var(--color-primary);margin:2rem 0 .5rem}
+    button{cursor:pointer;transition:all .25s ease}
 
-  header p {
-    margin: 4px 0 0;
-    font-size: 0.9em;
-    font-weight: 300;
-  }
+    /* ----------  HEADER  ---------- */
+    .store-header{
+      background:var(--color-primary-dark);
+      color:var(--color-light);
+      height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,.3);
+    }
+    .store-title{font-family:'Lexend Giga',sans-serif;font-size:1.9rem;letter-spacing:1px;font-weight:700;}
+    .cart-button{
+      position:absolute;right:24px;
+      background:none;border:none;color:var(--color-light);
+      font-size:1.6rem;line-height:1;
+    }
+    .cart-button:hover{transform:scale(1.15)}
 
-  #productos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    padding: 40px 5%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+    /* ----------  GRID DE PRODUCTOS  ---------- */
+    #productos{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:30px;
+      max-width:1200px;
+      padding:40px 5%;
+      margin:0 auto;
+    }
+    .producto{
+      background:var(--color-light);
+      border-radius:15px;box-shadow:var(--shadow);
+      padding:20px;text-align:center;
+      transition:transform .2s ease;
+    }
+    .producto h3{margin:10px 0 4px;font-size:1.15rem;font-family:'Climate Crisis',sans-serif}
+    .producto p{margin-bottom:12px;font-size:.95rem}
+    .producto:hover{transform:translateY(-4px)}
+    .producto button{
+      background:var(--color-primary);
+      color:var(--color-light);
+      border:2px solid var(--color-light);
+      border-radius:20px;padding:8px 16px;font-weight:500;
+    }
+    .producto button:hover{
+      background:var(--color-light);
+      color:var(--color-primary);
+      border:2px solid var(--color-primary);
+    }
 
-  .producto {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.2 ease;
-  }
+    /* ----------  CARRITO LATERAL  ---------- */
+    #carrito{
+      position:fixed;top:0;right:-350px;width:320px;height:100vh;
+      background:var(--color-light);
+      box-shadow:-2px 0 8px rgba(0,0,0,.2);
+      transition:right .3s ease;padding:24px 16px;overflow-y:auto;z-index:150;
+    }
+    #carrito.open{right:0}
+    #carrito h2{margin-bottom:1rem}
+    #lista-carrito li{display:flex;justify-content:space-between;margin-bottom:.5rem}
+    #lista-carrito button{background:none;border:none;color:var(--color-primary);font-size:1rem}
 
-  .producto img {
-    max-width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
+    /* ----------  BOTÓN GENÉRICO  ---------- */
+    .btn{padding:8px 12px;margin:5px;background:#000;color:#fff;border:none;border-radius:6px}
 
-  .producto h3 {
-    font-size: 1.1em;
-    margin: 10px 0 5px;
-  }
+    /* ----------  NOTIFICACIÓN  ---------- */
+    .notificacion{
+      position:fixed;bottom:20px;right:20px;
+      background:var(--color-primary);color:#fff;padding:10px 20px;border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,.2);display:none;
+      animation:fadeIn .3s ease forwards;
+    }
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-  .producto p {
-    font-size: 0.95em;
-    margin: 4px 0 12px;
-  }
-
-  .producto button {
-    background-color: #6b0014;
-    color: white;
-    border: 2px solid white;
-    border-radius: 20px;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-
-  .producto button:hover {
-    background-color: white;
-    color: #6b0014;
-    border: 2px solid #6b0014;
-  }
-
-  h2 {
-    text-align: center;
-    font-size: 2em;
-    color: #6b0014;
-    margin-top: 30px;
-  }
-
-  .notificacion {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #6b0014;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    animation: aparecer 0.3s ease;
-  }
-
-  @keyframes aparecer {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Estilos para carrito, formulario, etc. los puedo extender si querés */
-@media (max-width: 768px) {
-  #productos {
-    grid-template-columns: 2fr; /* dos columnas en móvil */
-    padding: 20px;
-  }
-
-  .producto img {
-    height: auto;
-  }
-}
-.store-header {
-  background-color: #590214;
-  color: white;
-  position: relative;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Lexend Giga', serif;
-  z-index: 100;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.store-title {
-  font-size: 3.5em;
-  letter-spacing: 1px;
-  font-weight: 700;
-}
-
-.cart-button {
-  position: absolute;
-  right: 20px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5em;
-  cursor: pointer;
-  font-family: 'Climate Crisis', sans-serif;
-  transition: transform 0.2s ease;
-}
-
-.cart-button:hover {
-  transform: scale(1.1);
-}
-#cart-sidebar {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 300px;
-  height: 100vh;
-  background: white;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
-  transition: right 0.3s ease;
-  z-index: 200;
-}
-
-#cart-sidebar.open {
-  right: 0;
-}
-
+    /* ----------  RESPONSIVE  ---------- */
+    @media(max-width:900px){
+      #productos{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:600px){
+      #productos{grid-template-columns:1fr}
+      .store-title{font-size:1.4rem}
+    }
   </style>
 </head>
 <body>
-<header class="store-header">
-  <div class="store-title">JustSing</div>
-  <button class="cart-button" onclick="toggleCart()">🛒</button>
-</header>
+  <!-- Header -->
+  <header class="store-header">
+    <div class="store-title">JustSing</div>
+    <button class="cart-button" onclick="toggleCart()">🛒</button>
+  </header>
 
-<!-- Sección de productos -->
-<h2>Productos</h2>
-<div id="productos">
-  <div class="producto">
-    <img src="https://i.postimg.cc/66cjFV71/IMG-9268.jpg" alt="Bolsa Florero">
-    <h3>Bolsa Florero</h3>
-    <p>$25.000</p>
-    <button onclick="agregarAlCarrito({id: 1, nombre: 'Bolsa Florero', precio: 25000});">Agregar al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="https://i.imgur.com/cU50TcN.jpeg" alt="Bolsa Mujer">
-    <h3>Bolsa Mujer</h3>
-    <p>$13.500</p>
-    <button onclick="agregarAlCarrito({id: 2, nombre: 'Bolsa Mujer', precio: 13500});">Agregar al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="tu-imagen.jpg" alt="Bolsa Lluvia">
-    <h3>Bolsa Lluvia</h3>
-    <p>$14.500</p>
-    <button onclick="agregarAlCarrito({id: 3, nombre: 'Bolsa Lluvia', precio: 14500});">Agregar al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="https://i.imgur.com/XVIESt1.jpeg" alt="Bolsa Lavanda">
-    <h3>Bolsa Lavanda</h3>
-    <p>$16.500</p>
-    <button onclick="agregarAlCarrito({id: 4, nombre: 'Bolsa Lavanda', precio: 16500});">Agregar al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="tu-imagen.jpg" alt="Bolsa Patö">
-    <h3>Bolsa Patö</h3>
-    <p>$11.500</p>
-    <button onclick="agregarAlCarrito({id: 5, nombre: 'Bolsa Patö', precio: 11500});">Agregar al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="https://i.imgur.com/SQjkk2Y.jpeg" alt="Bolsa Mida">
-    <h3>Bolsa Mida</h3>
-    <p>$20.000</p>
-    <button onclick="agregarAlCarrito({id: 6, nombre: 'Bolsa Mida', precio: 20000});">Agregar al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="tu-imagen.jpg" alt="Bolsa Olivo">
-    <h3>Bolsa Olivo</h3>
-    <p>$13.000</p>
-    <button onclick="agregarAlCarrito({id: 7, nombre: 'Bolsa Olivo', precio: 13000});">Agregar al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="https://i.imgur.com/bqt47CU.jpeg" alt="Bolsa 13">
-    <h3>Bolsa 13</h3>
-    <p>$13.000</p>
-    <button onclick="agregarAlCarrito({id: 8, nombre: 'Bolsa 13', precio: 13000});">Agregar al carrito</button>
-  </div>
-  <div class="producto">
-    <img src="tu-imagen.jpg" alt="Bolsa Frutis">
-    <h3>Bolsa Frutis</h3>
-    <p>$15.000</p>
-    <button onclick="agregarAlCarrito({id: 9, nombre: 'Bolsa Frutis', precio: 15000});">Agregar al carrito</button>
-  </div>
-</div>
-
-
-<!-- Botón de carrito -->
-<button id="toggle-carrito" class="btn">🛒 Carrito</button>
-
-<!-- Carrito -->
-<div id="carrito" style="display:none;">
-  <h2>Carrito</h2>
-  <ul id="lista-carrito"></ul>
-  <button id="vaciar-carrito" class="btn">Vaciar carrito</button>
-  <p>Total: $<span id="total"></span></p>
-  <button onclick="mostrarEnvio()" class="btn">Continuar compra</button>
-</div>
-
-<!-- Envío -->
-<div id="seccion-envio" style="display:none;">
-  <h2>Envío</h2>
-  <label><input type="radio" name="envio" value="domicilio" checked onclick="mostrarFormulario('domicilio')"> Correo Argentino (domicilio)</label><br>
-  <label><input type="radio" name="envio" value="sucursal" onclick="mostrarFormulario('sucursal')"> Correo Argentino (sucursal)</label>
-
-  <div id="form-domicilio">
-    <input placeholder="Provincia" required><br>
-    <input placeholder="Localidad" required><br>
-    <input placeholder="Calle y Número" required><br>
-    <input placeholder="Código postal" required><br>
-    <input placeholder="Piso y Dpto (opcional)"><br>
-    <input id="correo" placeholder="Correo Electrónico" required><span id="error-correo" class="error"></span><br>
-    <input placeholder="Nombre y apellido" required><br>
-    <input placeholder="Teléfono" required><br>
+  <!-- Productos -->
+  <h2>Productos</h2>
+  <div id="productos">
+    <div class="producto"><img src="https://i.postimg.cc/66cjFV71/IMG-9268.jpg" alt="Bolsa Florero"><h3>Bolsa Florero</h3><p>$25.000</p><button onclick="agregarAlCarrito({id:1,nombre:'Bolsa Florero',precio:25000})">Agregar al carrito</button></div>
+    <div class="producto"><img src="https://i.imgur.com/cU50TcN.jpeg" alt="Bolsa Mujer"><h3>Bolsa Mujer</h3><p>$13.500</p><button onclick="agregarAlCarrito({id:2,nombre:'Bolsa Mujer',precio:13500})">Agregar al carrito</button></div>
+    <div class="producto"><img src="tu-imagen.jpg" alt="Bolsa Lluvia"><h3>Bolsa Lluvia</h3><p>$14.500</p><button onclick="agregarAlCarrito({id:3,nombre:'Bolsa Lluvia',precio:14500})">Agregar al carrito</button></div>
+    <div class="producto"><img src="https://i.imgur.com/XVIESt1.jpeg" alt="Bolsa Lavanda"><h3>Bolsa Lavanda</h3><p>$16.500</p><button onclick="agregarAlCarrito({id:4,nombre:'Bolsa Lavanda',precio:16500})">Agregar al carrito</button></div>
+    <div class="producto"><img src="tu-imagen.jpg" alt="Bolsa Patö"><h3>Bolsa Patö</h3><p>$11.500</p><button onclick="agregarAlCarrito({id:5,nombre:'Bolsa Patö',precio:11500})">Agregar al carrito</button></div>
+    <div class="producto"><img src="https://i.imgur.com/SQjkk2Y.jpeg" alt="Bolsa Mida"><h3>Bolsa Mida</h3><p>$20.000</p><button onclick="agregarAlCarrito({id:6,nombre:'Bolsa Mida',precio:20000})">Agregar al carrito</button></div>
+    <div class="producto"><img src="tu-imagen.jpg" alt="Bolsa Olivo"><h3>Bolsa Olivo</h3><p>$13.000</p><button onclick="agregarAlCarrito({id:7,nombre:'Bolsa Olivo',precio:13000})">Agregar al carrito</button></div>
+    <div class="producto"><img src="https://i.imgur.com/bqt47CU.jpeg" alt="Bolsa 13"><h3>Bolsa 13</h3><p>$13.000</p><button onclick="agregarAlCarrito({id:8,nombre:'Bolsa 13',precio:13000})">Agregar al carrito</button></div>
+    <div class="producto"><img src="tu-imagen.jpg" alt="Bolsa Frutis"><h3>Bolsa Frutis</h3><p>$15.000</p><button onclick="agregarAlCarrito({id:9,nombre:'Bolsa Frutis',precio:15000})">Agregar al carrito</button></div>
   </div>
 
-  <div id="form-sucursal" style="display:none;">
-    <input placeholder="Provincia" required><br>
-    <input placeholder="Localidad" required><br>
-    <input placeholder="Calle y Número de Sucursal" required><br>
-    <input placeholder="Nombre y apellido" required><br>
-    <input placeholder="Correo Electrónico" required><br>
-    <input placeholder="Teléfono" required><br>
-  </div>
+  <!-- Carrito lateral -->
+  <aside id="carrito">
+    <h2>Carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <p>Total: $<span id="total">0</span></p>
+    <button class="btn" onclick="vaciarCarrito()">Vaciar carrito</button>
+    <button class="btn" onclick="mostrarEnvio()">Continuar compra</button>
+  </aside>
 
-  <button id="volver-carrito" class="btn">Volver al carrito</button>
-  <button onclick="mostrarResumenPedido()" class="btn">Continuar compra</button>
-</div>
+  <!-- Sección de envío -->
+  <section id="seccion-envio" style="display:none;padding:20px;max-width:600px;margin:0 auto;">
+    <h2>Envío</h2>
+    <label><input type="radio" name="envio" value="domicilio" checked onchange="mostrarFormulario('domicilio')"> Correo Argentino (domicilio)</label><br>
+    <label><input type="radio" name="envio" value="sucursal" onchange="mostrarFormulario('sucursal')"> Correo Argentino (sucursal)</label>
+    <div id="form-domicilio" style="margin-top:1rem;">
+      <input placeholder="Provincia" required><br>
+      <input placeholder="Localidad" required><br>
+      <input placeholder="Calle y Número" required><br>
+      <input placeholder="Código postal" required><br>
+      <input placeholder="Piso y Dpto (opcional)"><br>
+      <input id="correo" placeholder="Correo electrónico" required><span id="error-correo" class="error"></span><br>
+      <input placeholder="Nombre y apellido" required><br>
+      <input placeholder="Teléfono" required>
+    </div>
+    <div id="form-sucursal" style="display:none;margin-top:1rem;">
+      <input placeholder="Provincia" required><br>
+      <input placeholder="Localidad" required><br>
+      <input placeholder="Calle y Número de Sucursal" required><br>
+      <input placeholder="Nombre y apellido" required><br>
+      <input placeholder="Correo electrónico" required><br>
+      <input placeholder="Teléfono" required>
+    </div>
+    <button class="btn" onclick="volverAlCarrito()">Volver al carrito</button>
+    <button class="btn" onclick="mostrarResumenPedido()">Continuar compra</button>
+  </section>
 
-<!-- Resumen del pedido -->
-<div id="resumen-pedido" style="display: none;">
-  <h2>Resumen del pedido</h2>
-  <ul id="lista-resumen"></ul>
-  <p>Envío: $<span id="costo-envio"></span></p>
-  <p><strong>Total: $<span id="total-final"></span></strong></p>
-  <button onclick="mostrarPago()" class="btn">Finalizar compra</button>
-</div>
+  <!-- Resumen -->
+  <section id="resumen-pedido" style="display:none;padding:20px;max-width:600px;margin:0 auto;">
+    <h2>Resumen del pedido</h2>
+    <ul id="lista-resumen"></ul>
+    <p>Envío: $<span id="costo-envio"></span></p>
+    <p><strong>Total: $<span id="total-final"></span></strong></p>
+    <button class="btn" onclick="mostrarPago()">Finalizar compra</button>
+  </section>
 
-<!-- Pago -->
-<div id="seccion-pago" style="display:none;">
-  <h2>Pago</h2>
-  <label><input type="radio" name="pago" checked> Mercado Pago</label>
-  <p>Aquí va el API de Mercado Pago</p>
-<button onclick="pagarConMercadoPago()">Pagar con Mercado Pago</button>
-  
-  <label><input type="radio" name="pago"> Transferencia bancaria</label>
-  <p>CVU: 0000003100093480929286<br>Alias: JustSing<br>Titular: Just Sing</p>
+  <!-- Pago -->
+  <section id="seccion-pago" style="display:none;padding:20px;max-width:600px;margin:0 auto;">
+    <h2>Pago</h2>
+    <label><input type="radio" name="pago" value="mp" checked> Mercado Pago</label>
+    <p style="margin-left:20px 0;">Pagá de forma segura con Mercado Pago.</p>
+    <label><input type="radio" name="pago" value="transfer"> Transferencia bancaria</label>
+    <p style="margin-left:20px;">CVU: 0000003100093480929286<br>Alias: JustSing<br>Titular: Just Sing</p>
+    <button class="btn" onclick="pagarConMercadoPago()">Pagar con Mercado Pago</button>
+    <button class="btn" id="finalizar-compra">Finalizar compra</button>
+  </section>
 
-  <button id="finalizar-compra" class="btn">Finalizar compra</button>
-</div>
+  <!-- Confirmación -->
+  <section id="confirmacion-compra" style="display:none;padding:20px;text-align:center;">
+    <h2>¡Gracias por tu compra!</h2>
+    <p>Te contactaremos al correo proporcionado para confirmar el envío.</p>
+  </section>
 
-<!-- Confirmación -->
-<div id="confirmacion-compra" style="display: none;">
-  <h2>¡Gracias por tu compra!</h2>
-  <p>Te contactaremos al correo proporcionado para confirmar el envío.</p>
-</div>
+  <!-- Notificación -->
+  <div id="notificacion" class="notificacion"></div>
 
-<!-- Notificaciones -->
-<div id="notificacion" class="notificacion" style="display:none;"></div>
-
-<script>
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-let total = 0;
-let costoEnvio = 5000;
-
-function guardarCarrito() {
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-}
-
-function mostrarNotificacion(texto) {
-  const n = document.getElementById("notificacion");
-  n.textContent = texto;
-  n.style.display = "block";
-  setTimeout(() => n.style.display = "none", 3000);
-}
-
-function actualizarCarrito() {
-  const lista = document.getElementById("lista-carrito");
-  lista.innerHTML = "";
-  total = 0;
-  carrito.forEach((p, i) => {
-    const li = document.createElement("li");
-    li.textContent = `${p.nombre} - $${p.precio}`;
-    const btn = document.createElement("button");
-    btn.textContent = "❌";
-    btn.onclick = () => eliminarDelCarrito(p.id);
-    li.appendChild(btn);
-    lista.appendChild(li);
-    total += p.precio;
-  });
-  document.getElementById("total").textContent = total;
-}
-
-function agregarAlCarrito(producto) {
-  if (!carrito.find(p => p.id === producto.id)) {
-    carrito.push(producto);
-    mostrarNotificacion("Producto agregado a tu carrito");
-  } else {
-    mostrarNotificacion("Este producto es único y ya está en tu carrito");
-  }
-  guardarCarrito();
-  actualizarCarrito();
-}
-
-function eliminarDelCarrito(id) {
-  carrito = carrito.filter(p => p.id !== id);
-  guardarCarrito();
-  actualizarCarrito();
-}
-
-function mostrarEnvio() {
-  document.getElementById("carrito").style.display = "none";
-  document.getElementById("seccion-envio").style.display = "block";
-}
-
-function mostrarFormulario(tipo) {
-  document.getElementById("form-domicilio").style.display = tipo === 'domicilio' ? 'block' : 'none';
-  document.getElementById("form-sucursal").style.display = tipo === 'sucursal' ? 'block' : 'none';
-  costoEnvio = tipo === 'domicilio' ? 5000 : 4000;
-}
-
-function mostrarResumenPedido() {
-  document.getElementById("seccion-envio").style.display = "none";
-  const resumen = document.getElementById("lista-resumen");
-  resumen.innerHTML = "";
-  carrito.forEach(producto => {
-    const li = document.createElement("li");
-    li.textContent = producto.nombre;
-    resumen.appendChild(li);
-  });
-  document.getElementById("costo-envio").textContent = costoEnvio;
-  document.getElementById("total-final").textContent = total + costoEnvio;
-  document.getElementById("resumen-pedido").style.display = "block";
-}
-
-function mostrarPago() {
-  document.getElementById("resumen-pedido").style.display = "none";
-  document.getElementById("seccion-pago").style.display = "block";
-}
-
-document.getElementById("toggle-carrito").addEventListener("click", () => {
-  const c = document.getElementById("carrito");
-  c.style.display = c.style.display === "none" ? "block" : "none";
-});
-
-document.getElementById("finalizar-compra").addEventListener("click", () => {
-  document.getElementById("seccion-pago").style.display = "none";
-  document.getElementById("confirmacion-compra").style.display = "block";
-  carrito = [];
-  guardarCarrito();
-});
-
-document.getElementById("vaciar-carrito").addEventListener("click", () => {
-  carrito = [];
-  guardarCarrito();
-  actualizarCarrito();
-  mostrarNotificacion("Carrito vaciado");
-});
-
-document.getElementById("volver-carrito").addEventListener("click", () => {
-  document.getElementById("seccion-envio").style.display = "none";
-  document.getElementById("carrito").style.display = "block";
-});
-
-// Validación simple
-const correoInput = document.getElementById("correo");
-correoInput.addEventListener("blur", () => {
-  const error = document.getElementById("error-correo");
-  if (!correoInput.value.includes("@")) {
-    error.textContent = "Correo inválido";
-  } else {
-    error.textContent = "";
-  }
-});
-
-// Cargar carrito al iniciar
-actualizarCarrito();
-  
-  function toggleCart() {
-    const cart = document.getElementById("cart-sidebar");
-    if (cart) {
-      cart.classList.toggle("open");
-    }
-  }
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <!-- SCRIPT PRINCIPAL -->
   <script>
-  const mp = new MercadoPago('TEST-bf643f67-1adb-4977-a2c2-d6626c5d9d6a', {
-    locale: 'es-AR'
-  });
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let costoEnvio = 5000;
+    const mp = new MercadoPago('TEST-bf643f67-1adb-4977-a2c2-d6626c5d9d6a',{locale:'es-AR'});
 
-  function pagarConMercadoPago() {
-    fetch("https://api.mercadopago.com/checkout/preferences", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer TEST-6749756929605397-052312-273fa7ea1a2c0c67bb9b885668e3e916-2429370643",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        items: [
-          {
-            title: "Tu compra en TuTienda",
-            unit_price: 5000,
-            quantity: 1
-          }
-        ]
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      mp.checkout({
-        preference: {
-          id: data.id
-        },
-        autoOpen: true
-      });
-    });
-  }
-</script>
+    /* ---------- UTILIDADES ---------- */
+    const qs = s=>document.querySelector(s);
+    const q      = s=>document.querySelector(s);
 
-</script>
-</body>
-</html>
+    function guardarCarrito(){localStorage.setItem('carrito',JSON.stringify(carrito));}
+    function notificar(text){const n=qs('#notificacion');n.textContent=text;n.style.display='block';setTimeout(()=>n.style.display='none',3000);}
+
+    /* ---------- CARRITO ---------- */
+    function toggleCart(){qs('#carrito').classList.toggle('open');}
+
+    function actualizarCarrito(){
+      const ul=qs('#lista-carrito');ul.innerHTML='';let total=0;
+      carrito.forEach(p=>{
+        const li=document.createElement('li');
+        li.textContent=`${p.nombre} - $${p.precio.toLocaleString('es-AR')}`;
+        const b=document.createElement('button');b.textContent='❌';b.onclick=()=>eliminarDelCarrito(p.id);
+        li.appendChild(b);ul.appendChild(li);total+=p
