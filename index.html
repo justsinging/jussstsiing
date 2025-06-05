@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Just Sing</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
+ 
   <style>
     .btn { padding: 8px 12px; margin: 5px; background: #000; color: white; border: none; cursor: pointer; }
     .error { color: red; font-size: 0.9em; }
@@ -22,12 +25,16 @@
   text-align: center;
 }
   body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Climate+Crisis', sans-serif;
     margin: 0;
     background-color: #fdfcfc;
     color: #36000b;
   }
-
+header h1 {
+  font-family: 'Lexend+Giga', serif;
+  font-size: 2.2em;
+  letter-spacing: 1px;
+}
   header {
     background-color: #6b0014;
     color: white;
@@ -126,7 +133,7 @@
   /* Estilos para carrito, formulario, etc. los puedo extender si querés */
 @media (max-width: 768px) {
   #productos {
-    grid-template-columns: 1fr; /* una sola columna en móvil */
+    grid-template-columns: 2fr; /* dos columnas en móvil */
     padding: 20px;
   }
 
@@ -134,10 +141,64 @@
     height: auto;
   }
 }
+.store-header {
+  background-color: #36000b;
+  color: white;
+  position: relative;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.store-title {
+  font-size: 1.6em;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.cart-button {
+  position: absolute;
+  right: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5em;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: transform 0.2s ease;
+}
+
+.cart-button:hover {
+  transform: scale(1.1);
+}
+#cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease;
+  z-index: 200;
+}
+
+#cart-sidebar.open {
+  right: 0;
+}
 
   </style>
 </head>
 <body>
+<header class="store-header">
+  <div class="store-title">TuTienda</div>
+  <button class="cart-button" onclick="toggleCart()">🛒</button>
+</header>
+<button onclick="pagarConMercadoPago()">Pagar con Mercado Pago</button>
 
 <!-- Sección de productos -->
 <h2>Productos</h2>
@@ -388,6 +449,48 @@ correoInput.addEventListener("blur", () => {
 
 // Cargar carrito al iniciar
 actualizarCarrito();
+  
+  function toggleCart() {
+    const cart = document.getElementById("cart-sidebar");
+    if (cart) {
+      cart.classList.toggle("open");
+    }
+  }
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script>
+  const mp = new MercadoPago('TEST-bf643f67-1adb-4977-a2c2-d6626c5d9d6a', {
+    locale: 'es-AR'
+  });
+
+  function pagarConMercadoPago() {
+    fetch("https://api.mercadopago.com/checkout/preferences", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer TEST-6749756929605397-052312-273fa7ea1a2c0c67bb9b885668e3e916-2429370643",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            title: "Tu compra en TuTienda",
+            unit_price: 5000,
+            quantity: 1
+          }
+        ]
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      mp.checkout({
+        preference: {
+          id: data.id
+        },
+        autoOpen: true
+      });
+    });
+  }
+</script>
+
 </script>
 </body>
 </html>
