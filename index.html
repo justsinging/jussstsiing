@@ -236,6 +236,22 @@
 
   <!-- SCRIPT PRINCIPAL -->
   <script>
+    
+        document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('btn-agregar')) {
+    const boton = e.target;
+    const productoId = parseInt(boton.getAttribute('data-id'));
+    const productoNombre = boton.getAttribute('data-nombre');
+    const productoPrecio = parseFloat(boton.getAttribute('data-precio'));
+
+    agregarAlCarrito({
+      id: productoId,
+      nombre: productoNombre,
+      precio: productoPrecio,
+      cantidad: 1
+    });
+  }
+});
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     let costoEnvio = 5000;
     const mp = new MercadoPago('TEST-bf643f67-1adb-4977-a2c2-d6626c5d9d6a',{locale:'es-AR'});
@@ -273,21 +289,6 @@ function agregarAlCarrito(producto) {
   // ... tu código existente
 
   const botonesAgregar = document.querySelectorAll('.btn-agregar');
-
-  botonesAgregar.forEach(boton => {
-    boton.addEventListener('click', () => {
-      const productoId = boton.getAttribute('data-id');
-      const productoNombre = boton.getAttribute('data-nombre');
-      const productoPrecio = parseFloat(boton.getAttribute('data-precio'));
-
-      agregarAlCarrito({
-        id: productoId,
-        nombre: productoNombre,
-        precio: productoPrecio,
-        cantidad: 1
-      });
-    });
-  });
 </script>
 </body>
 </html>
