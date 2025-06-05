@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Just Sing</title>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700&family=Climate+Crisis&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700&family=Alpha+Slab+One&display=swap" rel="stylesheet">
   <!-- Mercado Pago SDK -->
   <script src="https://sdk.mercadopago.com/js/v2"></script>
 
@@ -217,3 +217,25 @@
         li.textContent=`${p.nombre} - $${p.precio.toLocaleString('es-AR')}`;
         const b=document.createElement('button');b.textContent='❌';b.onclick=()=>eliminarDelCarrito(p.id);
         li.appendChild(b);ul.appendChild(li);total+=p
+<script>
+  // ... tu código existente
+
+  const botonesAgregar = document.querySelectorAll('.btn-agregar');
+
+  botonesAgregar.forEach(boton => {
+    boton.addEventListener('click', () => {
+      const productoId = boton.getAttribute('data-id');
+      const productoNombre = boton.getAttribute('data-nombre');
+      const productoPrecio = parseFloat(boton.getAttribute('data-precio'));
+
+      agregarAlCarrito({
+        id: productoId,
+        nombre: productoNombre,
+        precio: productoPrecio,
+        cantidad: 1
+      });
+    });
+  });
+</script>
+</body>
+</html>
