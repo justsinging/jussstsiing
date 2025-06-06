@@ -1,194 +1,130 @@
-/* -------- CONFIG -------- */
-const PUBLIC_KEY = 'APP_USR-0aa95e81-e09e-42d7-95ea-540547141761';              // ⚠️ reemplaza
-const BACKEND_URL = 'http://localhost:3000';        // o tu dominio online
+// ========== CARRITO ==========
+let carrito = [];
 
-/* -------- VARIABLES GLOBALES -------- */
-let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-let mpInstance;   // Se inicializa cuando esté cargada la SDK
-
-/* -------- HELPERS -------- */
-const $ = s => document.querySelector(s);
-const guardarCarrito   = () => localStorage.setItem('carrito', JSON.stringify(carrito));
-const notificar = txt => {
-  const n = $('#notificacion');
-  n.textContent = txt;
-  n.style.display = 'block';
-  setTimeout(() => n.style.display = 'none', 3000);
-};
-
-/* -------- UI CARRITO -------- */
-function toggleCart(){ $('#carrito').classList.toggle('open'); }
-function actualizarContador(){
-  $('#cart-count').textContent = carrito.reduce((acc,p)=>acc+p.cantidad,0);
+// Función para actualizar el contador de ítems en el carrito
+function actualizarContador() {
+  document.getElementById("cart-count").textContent = carrito.length;
 }
-function actualizarCarrito(){
-  const ul = $('#lista-carrito'); ul.innerHTML='';
+
+// Función para renderizar los productos del carrito
+function renderizarCarrito() {
+  const lista = document.getElementById("lista-carrito");
+  lista.innerHTML = "";
   let total = 0;
-  carrito.forEach(p=>{
-    const li = document.createElement('li');
-    li.textContent = `${p.nombre} - $${p.precio.toLocaleString('es-AR')} x ${p.cantidad}`;
-    const b = document.createElement('button');
-    b.textContent='❌';
-    b.onclick=()=> eliminarDelCarrito(p.id);
-    li.appendChild(b); ul.appendChild(li);
-    total += p.precio * p.cantidad;
-  });
-  $('#total').textContent = total.toLocaleString('es-AR');
-  actualizarContador();
-}
-function agregarAlCarrito(prod){
-  const f = carrito.find(p=>p.id===prod.id);
-  f ? f.cantidad++ : carrito.push(prod);
-  guardarCarrito(); actualizarCarrito();
-  notificar(`${prod.nombre} agregado al carrito`);
-}
-function eliminarDelCarrito(id){
-  carrito = carrito.filter(p=>p.id!==id);
-  guardarCarrito(); actualizarCarrito();
-  notificar('Producto eliminado del carrito');
-}
-function vaciarCarrito(){
-  carrito=[]; guardarCarrito(); actualizarCarrito();
-  notificar('Carrito vaciado');
-}
 
-/* -------- LISTENERS -------- */
-document.addEventListener('DOMContentLoaded',()=>{
-  /* botones agregar */
-  document.addEventListener('click',e=>{
-    if(e.target.classList.contains('btn-agregar')){
-      const b=e.target;
-      agregarAlCarrito({
-        id:        parseInt(b.dataset.id),
-        nombre:    b.dataset.nombre,
-        precio:    parseFloat(b.dataset.precio),
-        cantidad:  1
-      });
-    }
+  carrito.forEach((item, i) => {
+    total += item.precio;
+    const li = document.createElement("li");
+    li.innerHTML = `${item.nombre} - $${item.precio} <button onclick="eliminarItem(${i})">x</button>`;
+    lista.appendChild(li);
   });
 
-  /* botón carrito */
-  $('.cart-button').addEventListener('click',toggleCart);
+  document.getElementById("total").textContent = total;
+  document.getElementById("resumen-total").textContent = total;
+}
 
-  /* botón pagar */
-  $('#btn-pagar').addEventListener('click',pagarConMercadoPago);
+// Agregar producto
+document.querySelectorAll(".btn-agregar").forEach(boton => {
+  boton.addEventListener("click", () => {
+    const id = boton.getAttribute("data-id");
+    const nombre = boton.getAttribute("data-nombre");
+    const precio = parseInt(boton.getAttribute("data-precio"));
 
-  /* instanciar MP cuando la SDK esté lista */
-  if(window.MercadoPago){
-    mpInstance = new MercadoPago(PUBLIC_KEY,{locale:'es-AR'});
-  }else{
-    console.error('SDK de Mercado Pago no cargó');
-  }
-
-  actualizarCarrito();
+    carrito.push({ id, nombre, precio });
+    mostrarNotificacion(`${nombre} agregado al carrito`);
+    actualizarContador();
+    renderizarCarrito();
+  });
 });
 
-/* -------- PAGO -------- */
-async function pagarConMercadoPago(){
-  if(!mpInstance){ return alert('SDK de Mercado Pago no disponible'); }
-
-  // Armamos los items a partir del carrito
-  const items = carrito.map(p=>({
-    title:  p.nombre,
-    quantity: p.cantidad,
-    unit_price: p.precio
-  }));
-
-  try{
-    const res = await fetch(`${BACKEND_URL}/crear-preferencia`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ items })
-    });
-    const data = await res.json();
-    if(!data.id) throw new Error('Respuesta sin id');
-    mpInstance.checkout({
-      preference:{ id:data.id },
-      autoOpen:true,
-    });
-  }catch(err){
-    console.error(err);
-    alert('Error al iniciar el pago. Intenta de nuevo.');
-  }
+// Eliminar ítem del carrito
+function eliminarItem(index) {
+  carrito.splice(index, 1);
+  actualizarContador();
+  renderizarCarrito();
 }
-<section id="seccion-envio" style="display:none;padding:20px;max-width:600px;margin:0 auto;">
-  <h2>Datos de Envío</h2>
-  <form id="form-envio">
-    <label>Nombre completo:<br><input type="text" name="nombre" required></label><br><br>
-    <label>Dirección:<br><input type="text" name="direccion" required></label><br><br>
-    <label>Ciudad:<br><input type="text" name="ciudad" required></label><br><br>
-    <label>Código postal:<br><input type="text" name="cp" required></label><br><br>
-    <button class="btn" type="submit">Continuar al pago</button>
-  </form>
-</section>
-let datosEnvio = {};
 
+// Vaciar carrito
+function vaciarCarrito() {
+  carrito = [];
+  actualizarContador();
+  renderizarCarrito();
+}
+
+// Mostrar/ocultar carrito lateral
+function toggleCart() {
+  document.getElementById("carrito").classList.toggle("open");
+}
+
+// Mostrar notificación
+function mostrarNotificacion(mensaje) {
+  const noti = document.getElementById("notificacion");
+  noti.textContent = mensaje;
+  noti.style.display = "block";
+  noti.style.animation = "fadeIn 0.5s";
+  setTimeout(() => {
+    noti.style.display = "none";
+  }, 2500);
+}
+
+// ========== FLUJO DE COMPRA ==========
+
+// Ir a la sección de envío
 function mostrarEnvio() {
-  $('#carrito').classList.remove('open');
-  $('#seccion-envio').style.display = 'block';
-  window.scrollTo({ top: $('#seccion-envio').offsetTop - 20, behavior: 'smooth' });
+  document.querySelector("main").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("seccion-envio").style.display = "block";
+  document.getElementById("carrito").classList.remove("open");
 }
 
-document.getElementById('form-envio').addEventListener('submit', function(e){
-  e.preventDefault();
-  const fd = new FormData(this);
-  datosEnvio = Object.fromEntries(fd.entries());
+// Volver al envío desde resumen
+function volverAEnvio() {
+  document.getElementById("seccion-resumen").style.display = "none";
+  document.getElementById("seccion-envio").style.display = "block";
+}
 
-  // Mostrar datos en resumen
-  $('#detalle-envio').innerHTML = `
-    <p><strong>Nombre:</strong> ${datosEnvio.nombre}</p>
-    <p><strong>Dirección:</strong> ${datosEnvio.direccion}, ${datosEnvio.ciudad} (${datosEnvio.cp})</p>
+// Mostrar resumen después de completar el formulario de envío
+document.getElementById("form-envio").addEventListener("submit", e => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+  const nombre = data.get("nombre");
+  const direccion = data.get("direccion");
+  const ciudad = data.get("ciudad");
+  const cp = data.get("cp");
+
+  document.getElementById("detalle-envio").innerHTML = `
+    <p><strong>Nombre:</strong> ${nombre}</p>
+    <p><strong>Dirección:</strong> ${direccion}, ${ciudad} (${cp})</p>
   `;
 
-  // Mostrar productos
-  const ul = $('#resumen-carrito');
-  ul.innerHTML = '';
-  let total = 0;
-  carrito.forEach(p => {
-    const li = document.createElement('li');
-    li.textContent = `${p.nombre} x${p.cantidad} - $${(p.precio * p.cantidad).toLocaleString('es-AR')}`;
-    ul.appendChild(li);
-    total += p.precio * p.cantidad;
+  // Mostrar resumen del carrito
+  const resumenLista = document.getElementById("resumen-carrito");
+  resumenLista.innerHTML = "";
+  carrito.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.nombre} - $${item.precio}`;
+    resumenLista.appendChild(li);
   });
-  $('#resumen-total').textContent = total.toLocaleString('es-AR');
 
-  // Mostrar sección resumen
-  $('#seccion-envio').style.display = 'none';
-  $('#seccion-resumen').style.display = 'block';
-  window.scrollTo({ top: $('#seccion-resumen').offsetTop - 20, behavior: 'smooth' });
+  document.getElementById("seccion-envio").style.display = "none";
+  document.getElementById("seccion-resumen").style.display = "block";
 });
 
-function volverAEnvio() {
-  $('#seccion-resumen').style.display = 'none';
-  $('#seccion-envio').style.display = 'block';
-}
-
+// Mostrar pago
 function mostrarPago() {
-  $('#seccion-resumen').style.display = 'none';
-  $('#seccion-pago').style.display = 'block';
-  window.scrollTo({ top: $('#seccion-pago').offsetTop - 20, behavior: 'smooth' });
+  document.getElementById("seccion-resumen").style.display = "none";
+  document.getElementById("seccion-pago").style.display = "block";
 }
 
-function mostrarConfirmacion() {
-  $('#seccion-pago').style.display = 'none';
-  $('#seccion-confirmacion').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function irAlInicio() {
-  $('#seccion-confirmacion').style.display = 'none';
+// Confirmar compra (simulado, sin integración)
+document.getElementById("btn-pagar").addEventListener("click", () => {
+  document.getElementById("seccion-pago").style.display = "none";
+  document.getElementById("seccion-confirmacion").style.display = "block";
   vaciarCarrito();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-document.getElementById('form-envio').addEventListener('submit', function(e){
-  e.preventDefault();
-  // Aquí podrías validar datos o guardarlos
-  document.getElementById('seccion-envio').style.display = 'none';
-  document.getElementById('seccion-pago').style.display = 'block';
-  window.scrollTo({ top: document.getElementById('seccion-pago').offsetTop - 20, behavior: 'smooth' });
 });
 
-/* -------- EXPORTAR a window para HTML inline -------- */
-window.toggleCart    = toggleCart;
-window.vaciarCarrito = vaciarCarrito;
+// Volver al inicio
+function irAlInicio() {
+  document.getElementById("seccion-confirmacion").style.display = "none";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
