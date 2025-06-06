@@ -67,3 +67,14 @@ app.post('/crear-preferencia', async (req,res)=>{
 
 /* ---------- RUN ---------- */
 app.listen(PORT, ()=> console.log(`Servidor MP 🟢  http://localhost:${PORT}`));
+function agregarAlCarrito(prod){
+  const existe = carrito.find(p=>p.id===prod.id);
+  if(existe){
+    mostrarNotificacion('No se pueden agregar más: cada producción es única.');
+    return;
+  }
+  carrito.push(prod);
+  actualizarContador();
+  renderizarCarrito();
+  mostrarNotificacion(`${prod.nombre} agregado al carrito`);
+}
