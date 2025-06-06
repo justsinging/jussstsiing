@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Just Sing</title>
+
+  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700&family=Alfa+Slab+One&display=swap" rel="stylesheet">
+  
+  <!-- Mercado Pago -->
   <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+  <!-- Estilos -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,10 +23,11 @@
   </header>
 
   <main>
-    <h2>Productos</h2>
-    <div id="productos"></div>
+    <h2 style="text-align:center; margin-top: 1rem;">Productos</h2>
+    <div id="productos" class="container"></div>
 
-    <section id="form-envio-section">
+    <!-- Formulario de envío -->
+    <section id="form-envio-section" style="display: none;">
       <h2>Datos de Envío</h2>
       <form id="form-envio">
         <label>Nombre completo:<br><input type="text" name="nombre" required></label><br><br>
@@ -31,7 +38,8 @@
       </form>
     </section>
 
-    <section id="seccion-resumen" style="display:none">
+    <!-- Resumen del pedido -->
+    <section id="seccion-resumen" style="display:none;">
       <h2>Resumen del Pedido</h2>
       <div id="detalle-envio"></div>
       <ul id="resumen-carrito"></ul>
@@ -40,13 +48,15 @@
       <button class="btn" onclick="mostrarPago()">Ir al pago</button>
     </section>
 
-    <section id="seccion-confirmacion" style="display:none">
+    <!-- Confirmación -->
+    <section id="seccion-confirmacion" style="display:none;">
       <h2>¡Gracias por tu compra! 💖</h2>
       <p>Te enviaremos un mail con los detalles.</p>
       <button class="btn" onclick="irAlInicio()">Volver al inicio</button>
     </section>
 
-    <section id="seccion-pago" style="display:none">
+    <!-- Pago -->
+    <section id="seccion-pago" style="display:none;">
       <h2>Pago</h2>
       <label><input type="radio" name="pago" value="mp" checked> Mercado Pago</label>
       <p style="margin:0 0 1rem 20px;">Pagá de forma segura con Mercado Pago.</p>
@@ -54,20 +64,22 @@
     </section>
   </main>
 
-  <aside id="carrito">
+  <!-- Carrito lateral -->
+  <aside id="carrito" class="cart-sidebar">
     <button class="cart-close" onclick="toggleCart()">✖</button>
     <h2>Carrito</h2>
     <ul id="lista-carrito"></ul>
     <p>Total: $<span id="total">0</span></p>
-
     <div class="cart-actions">
       <button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
       <button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
     </div>
   </aside>
 
+  <!-- Notificación flotante -->
   <div id="notificacion" class="notificacion"></div>
 
+  <!-- Script principal -->
   <script src="main.js" defer></script>
 </body>
 </html>
