@@ -40,7 +40,7 @@
     .cart-button:hover{transform:scale(1.15)}
     /* contador */
     .cart-count{background:crimson;color:#fff;border-radius:50%;padding:2px 6px;font-size:.8rem;margin-left:4px;vertical-align:top;}
-<button class="cart-close" onclick="toggleCart()">✖</button>
+
 
     /* ----------  GRID PRODUCTOS  ---------- */
     #productos{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:1200px;padding:40px 5%;margin:0 auto;}
@@ -50,13 +50,6 @@
     .producto p{margin-bottom:12px;font-size:.95rem}
     .producto button{background:var(--color-primary);color:var(--color-light);border:2px solid var(--color-light);border-radius:20px;padding:8px 16px;font-weight:500;}
     .producto button:hover{background:var(--color-light);color:var(--color-primary);border-color:var(--color-primary)}
-
-    /* ----------  CARRITO LATERAL  ---------- */
-    #carrito{position:fixed;top:0;right:-350px;width:320px;height:100vh;background:var(--color-light);
-      box-shadow:-2px 0 8px rgba(0,0,0,.2);transition:right .3s;padding:24px 16px;overflow-y:auto;z-index:150;}
-    #carrito.open{right:0}
-    #lista-carrito li{display:flex;justify-content:space-between;margin-bottom:.5rem}
-    #lista-carrito button{background:none;border:none;color:var(--color-primary);font-size:1rem}
 /* ----------  CARRITO LATERAL  ---------- */
 #carrito{
   position:fixed;top:0;right:-350px;width:320px;height:100vh;
@@ -111,7 +104,6 @@
     <button class="cart-button" onclick="toggleCart()">🛒 <span id="cart-count" class="cart-count">0</span></button>
   </header>
 <main>
-  <section id="seccion-envio" style="display:none;padding:20px;max-width:600px;margin:0 auto;">
   <h2>Datos de Envío</h2>
   <form id="form-envio">
     <label>Nombre completo:<br><input type="text" name="nombre" required></label><br><br>
@@ -193,7 +185,6 @@
  <!-- Carrito lateral -->
 <aside id="carrito">
   <button class="cart-close" onclick="toggleCart()">✖</button>
-
   <h2>Carrito</h2>
   <ul id="lista-carrito"></ul>
   <p>Total: $<span id="total">0</span></p>
@@ -218,14 +209,6 @@
     <p>Total: $<span id="resumen-total">0</span></p>
     <button class="btn-cart" onclick="volverAEnvio()">Volver al envío</button>
     <button class="btn-cart" onclick="mostrarPago()">Ir al pago</button>
-  </section>
-
-  <!-- Sección Pago -->
-  <section id="seccion-pago" style="display:none;">
-    <h3>Pago</h3>
-    <label><input type="radio" name="pago" value="mp" checked> Mercado Pago</label>
-    <p style="margin:0 0 1rem 20px;">Pagá de forma segura con Mercado Pago.</p>
-    <button class="btn-cart" id="btn-pagar">Pagar</button>
   </section>
 
   <!-- Confirmación -->
