@@ -56,6 +56,38 @@
     #carrito.open{right:0}
     #lista-carrito li{display:flex;justify-content:space-between;margin-bottom:.5rem}
     #lista-carrito button{background:none;border:none;color:var(--color-primary);font-size:1rem}
+/* ----------  CARRITO LATERAL  ---------- */
+#carrito{
+  position:fixed;top:0;right:-350px;width:320px;height:100vh;
+  background:var(--color-light);box-shadow:-2px 0 8px rgba(0,0,0,.2);
+  transition:right .3s;padding:24px 16px;overflow-y:auto;z-index:150;
+
+  /* NUEVO → layout en columna para anclar acciones abajo */
+  display:flex;flex-direction:column;
+}
+#carrito.open{right:0}
+
+/* cierre (X) */
+.cart-close{
+  position:absolute;top:10px;left:10px;
+  background:none;border:none;font-size:1.4rem;color:var(--color-primary-dark);
+  cursor:pointer;
+}
+
+/* lista más aire */
+#lista-carrito li{display:flex;justify-content:space-between;
+  margin-bottom:1rem;   /* antes .5rem */
+}
+
+/* contenedor de botones al fondo */
+.cart-actions{margin-top:auto;text-align:center}
+
+/* botones color #36000b */
+.btn-cart{
+  background:#36000b;color:#fff;border:none;border-radius:6px;
+  padding:8px 12px;margin:5px;transition:all .25s;
+}
+.btn-cart:hover{opacity:.85}
 
     /* ----------  GENÉRICOS  ---------- */
     .btn{padding:8px 12px;margin:5px;background:#000;color:#fff;border:none;border-radius:6px}
@@ -157,13 +189,58 @@
   </div>
 
   <!-- Carrito lateral -->
-  <aside id="carrito">
-    <h2>Carrito</h2>
-    <ul id="lista-carrito"></ul>
-    <p>Total: $<span id="total">0</span></p>
-    <button class="btn" onclick="vaciarCarrito()">Vaciar carrito</button>
-    <button class="btn" onclick="mostrarEnvio()">Continuar compra</button>
-  </aside>
+ <!-- Carrito lateral -->
+<aside id="carrito">
+  <button class="cart-close" onclick="toggleCart()">✖</button>
+
+  <h2>Carrito</h2>
+  <ul id="lista-carrito"></ul>
+  <p>Total: $<span id="total">0</span></p>
+
+  <!-- Sección Envío dentro del carrito -->
+  <section id="seccion-envio" style="display:none;">
+    <h3>Datos de Envío</h3>
+    <form id="form-envio">
+      <label>Nombre completo:<br><input type="text" name="nombre" required></label><br>
+      <label>Dirección:<br><input type="text" name="direccion" required></label><br>
+      <label>Ciudad:<br><input type="text" name="ciudad" required></label><br>
+      <label>Código postal:<br><input type="text" name="cp" required></label><br>
+      <button class="btn-cart" type="submit">Continuar al resumen</button>
+    </form>
+  </section>
+
+  <!-- Sección Resumen -->
+  <section id="seccion-resumen" style="display:none;">
+    <h3>Resumen</h3>
+    <div id="detalle-envio"></div>
+    <ul id="resumen-carrito"></ul>
+    <p>Total: $<span id="resumen-total">0</span></p>
+    <button class="btn-cart" onclick="volverAEnvio()">Volver al envío</button>
+    <button class="btn-cart" onclick="mostrarPago()">Ir al pago</button>
+  </section>
+
+  <!-- Sección Pago -->
+  <section id="seccion-pago" style="display:none;">
+    <h3>Pago</h3>
+    <label><input type="radio" name="pago" value="mp" checked> Mercado Pago</label>
+    <p style="margin:0 0 1rem 20px;">Pagá de forma segura con Mercado Pago.</p>
+    <button class="btn-cart" id="btn-pagar">Pagar</button>
+  </section>
+
+  <!-- Confirmación -->
+  <section id="seccion-confirmacion" style="display:none;text-align:center;">
+    <h3>¡Gracias por tu compra! 💖</h3>
+    <p>Te enviaremos un mail con los detalles.</p>
+    <button class="btn-cart" onclick="irAlInicio()">Volver al inicio</button>
+  </section>
+
+  <!-- Botones principales anclados abajo -->
+  <div class="cart-actions">
+    <button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
+    <button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
+  </div>
+</aside>
+
 
   <!-- (Secciones de envío, resumen, pago y confirmación siguen igual) -->
   <!-- Sólo agregó id="btn-pagar" al botón de Mercado Pago -->
