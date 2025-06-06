@@ -45,10 +45,6 @@ const ACCESS_TOKEN = 'TEST-REEMPLAZA_POR_TU_ACCESS_TOKEN';  // ⚠️ clave secr
 /* ---------- CONFIG ---------- */
 mercadopago.configure({ access_token: ACCESS_TOKEN });
 
-const app = express();
-app.use(cors());               // permite peticiones desde tu frontend
-app.use(express.json());
-
 /* ---------- ENDPOINT ---------- */
 app.post('/crear-preferencia', async (req,res)=>{
   try{
