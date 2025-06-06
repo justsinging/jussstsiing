@@ -6,7 +6,7 @@
   <title>Just Sing</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700&family=Alpha+Slab+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700&family=Alfa+Slab+One&display=swap" rel="stylesheet">
 
   <!-- Mercado Pago SDK (UNA sola vez) -->
   <script src="https://sdk.mercadopago.com/js/v2"></script>
@@ -23,7 +23,7 @@
 
     /* ----------  BASE  ---------- */
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Poppins',sans-serif;background:var(--color-bg);color:var(--color-primary-dark);}
+    body{font-family:'Lexend Giga',sans-serif;background:var(--color-bg);color:var(--color-primary-dark);}
     img{max-width:100%;display:block;border-radius:10px}
     h2{text-align:center;font-size:2rem;color:var(--color-primary);margin:2rem 0 .5rem}
     button{cursor:pointer;transition:all .25s ease}
@@ -45,7 +45,7 @@
     #productos{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:1200px;padding:40px 5%;margin:0 auto;}
     .producto{background:var(--color-light);border-radius:15px;box-shadow:var(--shadow);padding:20px;text-align:center;transition:transform .2s;}
     .producto:hover{transform:translateY(-4px)}
-    .producto h3{margin:10px 0 4px;font-size:1.15rem;font-family:'Climate Crisis',sans-serif}
+    .producto h3{margin:10px 0 4px;font-size:1.15rem;font-family:'Alfa Slab One',sans-serif}
     .producto p{margin-bottom:12px;font-size:.95rem}
     .producto button{background:var(--color-primary);color:var(--color-light);border:2px solid var(--color-light);border-radius:20px;padding:8px 16px;font-weight:500;}
     .producto button:hover{background:var(--color-light);color:var(--color-primary);border-color:var(--color-primary)}
@@ -81,7 +81,59 @@
   <!-- Productos -->
   <h2>Productos</h2>
   <div id="productos">
-    <!-- … (tus productos tal como los tenías) … -->
+<!-- Productos -->
+  <h2>Productos</h2>
+  <div id="productos">
+    <div class="producto">
+    <img src="https://i.postimg.cc/66cjFV71/IMG-9268.jpg" alt="Bolsa Florero">
+    <h3>Bolsa Florero</h3><p>$25.000</p>
+    <button class="btn-agregar" data-id="1" data-nombre="Bolsa Florero" data-precio="25000">Agregar al carrito</button>
+    </div>
+    
+    <div class="producto">
+    <img src="https://i.imgur.com/cU50TcN.jpeg" alt="Bolsa Mujer">
+      <h3>Bolsa Mujer</h3><p>$13.500</p>
+      <button class="btn-agregar" data-id="2" data-nombre="Bolsa Mujer" data-precio="13500">Agregar al carrito</button>
+    </div>
+    
+      <div class="producto"><img src="tu-imagen.jpg" alt="Bolsa Lluvia">
+        <h3>Bolsa Lluvia</h3><p>$14.500</p>
+        <button class="btn-agregar" data-id="3" data-nombre="Bolsa Lluvia" data-precio="14500">Agregar al carrito</button>
+      </div>
+        <div class="producto">
+          <img src="https://i.imgur.com/XVIESt1.jpeg" alt="Bolsa Lavanda">
+          <h3>Bolsa Lavanda</h3><p>$16.500</p><button class="btn-agregar" data-id="4" data-nombre="Bolsa Lavanda" data-precio="16500">Agregar al carrito</button>
+        </div>
+    
+          <div class="producto">
+            <img src="tu-imagen.jpg" alt="Bolsa Patö">
+            <h3>Bolsa Patö</h3><p>$11.500</p>
+            <button class="btn-agregar" data-id="5" data-nombre="Bolsa Patö" data-precio="11500">Agregar al carrito</button>
+          </div>
+    
+            <div class="producto">
+              <img src="https://i.imgur.com/SQjkk2Y.jpeg" alt="Bolsa Mida">
+              <h3>Bolsa Mida</h3><p>$20.000</p>
+              <button class="btn-agregar" data-id="6" data-nombre="Bolsa Mida" data-precio="20000">Agregar al carrito</button>
+            </div>
+    
+              <div class="producto">
+                <img src="tu-imagen.jpg" alt="Bolsa Olivo">
+                <h3>Bolsa Olivo</h3><p>$13.000</p>
+                <button class="btn-agregar" data-id="7" data-nombre="Bolsa Olivo" data-precio="13000">Agregar al carrito</button>
+              </div>
+    
+                <div class="producto">
+                  <img src="https://i.imgur.com/bqt47CU.jpeg" alt="Bolsa 13">
+                  <h3>Bolsa 13</h3><p>$13.000</p>
+                  <button class="btn-agregar" data-id="8" data-nombre="Bolsa 13" data-precio="13000">Agregar al carrito</button>
+                </div>
+    
+                  <div class="producto">
+                    <img src="tu-imagen.jpg" alt="Bolsa Frutis">
+                    <h3>Bolsa Frutis</h3><p>$15.000</p>
+                    <button class="btn-agregar" data-id="9" data-nombre="Bolsa Frutis" data-precio="15000">Agregar al carrito</button>
+  </div>
   </div>
 
   <!-- Carrito lateral -->
