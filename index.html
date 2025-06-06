@@ -4,241 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Just Sing</title>
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700&family=Alfa+Slab+One&display=swap" rel="stylesheet">
-
-  <!-- Mercado Pago SDK (UNA sola vez) -->
   <script src="https://sdk.mercadopago.com/js/v2"></script>
-
-  <style>
-    /* ----------  VARIABLES  ---------- */
-    :root{
-      --color-bg:#fdfcfc;
-      --color-primary:#6b0014;
-      --color-primary-dark:#36000b;
-      --color-light:#ffffff;
-      --shadow:0 4px 12px rgba(0,0,0,.1);
-    }
-
-    /* ----------  BASE  ---------- */
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Lexend Giga',sans-serif;background:var(--color-bg);color:var(--color-primary-dark);}
-    img{max-width:100%;display:block;border-radius:10px}
-    h2{text-align:center;font-size:2rem;color:var(--color-primary);margin:2rem 0 .5rem}
-    button{cursor:pointer;transition:all .25s ease}
-
-    /* ----------  HEADER  ---------- */
-    .store-header{
-      background:var(--color-primary-dark);
-      color:var(--color-light);
-      height:64px;display:flex;align-items:center;justify-content:center;
-      position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,.3);
-    }
-    .store-title{font-family:'Lexend Giga',sans-serif;font-size:1.9rem;font-weight:700;}
-    .cart-button{position:absolute;right:24px;background:none;border:none;color:var(--color-light);font-size:1.6rem;}
-    .cart-button:hover{transform:scale(1.15)}
-    /* contador */
-    .cart-count{background:crimson;color:#fff;border-radius:50%;padding:2px 6px;font-size:.8rem;margin-left:4px;vertical-align:top;}
-
-
-    /* ----------  GRID PRODUCTOS  ---------- */
-    #productos{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:1200px;padding:40px 5%;margin:0 auto;}
-    .producto{background:var(--color-light);border-radius:15px;box-shadow:var(--shadow);padding:20px;text-align:center;transition:transform .2s;}
-    .producto:hover{transform:translateY(-4px)}
-    .producto h3{margin:10px 0 4px;font-size:1.15rem;font-family:'Alfa Slab One',sans-serif}
-    .producto p{margin-bottom:12px;font-size:.95rem}
-    .producto button{background:var(--color-primary);color:var(--color-light);border:2px solid var(--color-light);border-radius:20px;padding:8px 16px;font-weight:500;}
-    .producto button:hover{background:var(--color-light);color:var(--color-primary);border-color:var(--color-primary)}
-/* ----------  CARRITO LATERAL  ---------- */
-#carrito{
-  position:fixed;top:0;right:-350px;width:320px;height:100vh;
-  background:var(--color-light);box-shadow:-2px 0 8px rgba(0,0,0,.2);
-  transition:right .3s;padding:24px 16px;overflow-y:auto;z-index:150;
-
-  /* NUEVO → layout en columna para anclar acciones abajo */
-  display:flex;flex-direction:column;
-}
-#carrito.open{right:0}
-
-/* cierre (X) */
-.cart-close{
-  position:absolute;top:10px;left:10px;
-  background:none;border:none;font-size:1.4rem;color:var(--color-primary-dark);
-  cursor:pointer;
-}
-
-/* lista más aire */
-#lista-carrito li{display:flex;justify-content:space-between;
-  margin-bottom:1rem;   /* antes .5rem */
-}
-
-/* contenedor de botones al fondo */
-.cart-actions{margin-top:auto;text-align:center}
-
-/* botones color #36000b */
-.btn-cart{
-  background:#36000b;color:#fff;border:none;border-radius:6px;
-  padding:8px 12px;margin:5px;transition:all .25s;
-}
-.btn-cart:hover{opacity:.85}
-
-    /* ----------  GENÉRICOS  ---------- */
-    .btn{padding:8px 12px;margin:5px;background:#000;color:#fff;border:none;border-radius:6px}
-
-    /* ----------  NOTIFICACIÓN  ---------- */
-    .notificacion{position:fixed;bottom:20px;right:20px;background:var(--color-primary);color:#fff;
-      padding:10px 20px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.2);display:none}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-    /* ----------  RESPONSIVE  ---------- */
-    @media(max-width:900px){#productos{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:600px){#productos{grid-template-columns:1fr}.store-title{font-size:1.4rem}}
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <!-- Header -->
   <header class="store-header">
     <div class="store-title">JustSing</div>
-    <button class="cart-button" onclick="toggleCart()">🛒 <span id="cart-count" class="cart-count">0</span></button>
+    <button class="cart-button" onclick="toggleCart()">
+      🛒 <span id="cart-count" class="cart-count">0</span>
+    </button>
   </header>
-<main>
-  <h2>Datos de Envío</h2>
-  <form id="form-envio">
-    <label>Nombre completo:<br><input type="text" name="nombre" required></label><br><br>
-    <label>Dirección:<br><input type="text" name="direccion" required></label><br><br>
-    <label>Ciudad:<br><input type="text" name="ciudad" required></label><br><br>
-    <label>Código postal:<br><input type="text" name="cp" required></label><br><br>
-    <button class="btn" type="submit">Continuar al resumen</button>
-  </form>
-    <section id="seccion-resumen" style="display:none;padding:20px;max-width:600px;margin:0 auto;">
-  <h2>Resumen del Pedido</h2>
-  <div id="detalle-envio"></div>
-  <ul id="resumen-carrito"></ul>
-  <p>Total: $<span id="resumen-total">0</span></p>
-  <button class="btn" onclick="volverAEnvio()">Volver al envío</button>
-  <button class="btn" onclick="mostrarPago()">Ir al pago</button>
-</section>
-<section id="seccion-confirmacion" style="display:none;padding:20px;max-width:600px;margin:0 auto;text-align:center">
-  <h2>¡Gracias por tu compra! 💖</h2>
-  <p>Te enviaremos un mail con los detalles.</p>
-  <button class="btn" onclick="irAlInicio()">Volver al inicio</button>
-</section>
 
-</main>
-<!-- Productos -->
-  <h2>Productos</h2>
-  <div id="productos">
-    <div class="producto">
-    <img src="https://i.postimg.cc/66cjFV71/IMG-9268.jpg" alt="Bolsa Florero">
-    <h3>Bolsa Florero</h3><p>$22.000</p>
-    <button class="btn-agregar" data-id="1" data-nombre="Bolsa Florero" data-precio="25000">Agregar al carrito</button>
+  <main>
+    <h2>Productos</h2>
+    <div id="productos"></div>
+
+    <section id="form-envio-section">
+      <h2>Datos de Envío</h2>
+      <form id="form-envio">
+        <label>Nombre completo:<br><input type="text" name="nombre" required></label><br><br>
+        <label>Dirección:<br><input type="text" name="direccion" required></label><br><br>
+        <label>Ciudad:<br><input type="text" name="ciudad" required></label><br><br>
+        <label>Código postal:<br><input type="text" name="cp" required></label><br><br>
+        <button class="btn" type="submit">Continuar al resumen</button>
+      </form>
+    </section>
+
+    <section id="seccion-resumen" style="display:none">
+      <h2>Resumen del Pedido</h2>
+      <div id="detalle-envio"></div>
+      <ul id="resumen-carrito"></ul>
+      <p>Total: $<span id="resumen-total">0</span></p>
+      <button class="btn" onclick="volverAEnvio()">Volver al envío</button>
+      <button class="btn" onclick="mostrarPago()">Ir al pago</button>
+    </section>
+
+    <section id="seccion-confirmacion" style="display:none">
+      <h2>¡Gracias por tu compra! 💖</h2>
+      <p>Te enviaremos un mail con los detalles.</p>
+      <button class="btn" onclick="irAlInicio()">Volver al inicio</button>
+    </section>
+
+    <section id="seccion-pago" style="display:none">
+      <h2>Pago</h2>
+      <label><input type="radio" name="pago" value="mp" checked> Mercado Pago</label>
+      <p style="margin:0 0 1rem 20px;">Pagá de forma segura con Mercado Pago.</p>
+      <button class="btn" id="btn-pagar">Pagar con Mercado Pago</button>
+    </section>
+  </main>
+
+  <aside id="carrito">
+    <button class="cart-close" onclick="toggleCart()">✖</button>
+    <h2>Carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <p>Total: $<span id="total">0</span></p>
+
+    <div class="cart-actions">
+      <button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
+      <button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
     </div>
-    
-    <div class="producto">
-    <img src="https://i.imgur.com/cU50TcN.jpeg" alt="Bolsa Mujer">
-      <h3>Bolsa Mujer</h3><p>$13.500</p>
-      <button class="btn-agregar" data-id="2" data-nombre="Bolsa Mujer" data-precio="13500">Agregar al carrito</button>
-    </div>
-    
-      <div class="producto"><img src="tu-imagen.jpg" alt="Bolsa Lluvia">
-        <h3>Bolsa Lluvia</h3><p>$14.500</p>
-        <button class="btn-agregar" data-id="3" data-nombre="Bolsa Lluvia" data-precio="14500">Agregar al carrito</button>
-      </div>
-        <div class="producto">
-          <img src="https://i.imgur.com/XVIESt1.jpeg" alt="Bolsa Lavanda">
-          <h3>Bolsa Lavanda</h3><p>$16.500</p><button class="btn-agregar" data-id="4" data-nombre="Bolsa Lavanda" data-precio="16500">Agregar al carrito</button>
-        </div>
-    
-          <div class="producto">
-            <img src="tu-imagen.jpg" alt="Bolsa Patö">
-            <h3>Bolsa Patö</h3><p>$11.500</p>
-            <button class="btn-agregar" data-id="5" data-nombre="Bolsa Patö" data-precio="11500">Agregar al carrito</button>
-          </div>
-    
-            <div class="producto">
-              <img src="https://i.imgur.com/SQjkk2Y.jpeg" alt="Bolsa Mida">
-              <h3>Bolsa Mida</h3><p>$18.000</p>
-              <button class="btn-agregar" data-id="6" data-nombre="Bolsa Mida" data-precio="20000">Agregar al carrito</button>
-            </div>
-    
-              <div class="producto">
-                <img src="tu-imagen.jpg" alt="Bolsa Olivo">
-                <h3>Bolsa Olivo</h3><p>$13.000</p>
-                <button class="btn-agregar" data-id="7" data-nombre="Bolsa Olivo" data-precio="13000">Agregar al carrito</button>
-              </div>
-    
-                <div class="producto">
-                  <img src="https://i.imgur.com/bqt47CU.jpeg" alt="Bolsa 13">
-                  <h3>Bolsa 13</h3><p>$13.000</p>
-                  <button class="btn-agregar" data-id="8" data-nombre="Bolsa 13" data-precio="13000">Agregar al carrito</button>
-                </div>
-    
-                  <div class="producto">
-                    <img src="tu-imagen.jpg" alt="Bolsa Frutis">
-                    <h3>Bolsa Frutis</h3><p>$15.000</p>
-                    <button class="btn-agregar" data-id="9" data-nombre="Bolsa Frutis" data-precio="15000">Agregar al carrito</button>
-  </div>
+  </aside>
 
-  <!-- Carrito lateral -->
- <!-- Carrito lateral -->
-<aside id="carrito">
-  <button class="cart-close" onclick="toggleCart()">✖</button>
-  <h2>Carrito</h2>
-  <ul id="lista-carrito"></ul>
-  <p>Total: $<span id="total">0</span></p>
-
-  <!-- Sección Envío dentro del carrito -->
-  <section id="seccion-envio" style="display:none;">
-    <h3>Datos de Envío</h3>
-    <form id="form-envio">
-      <label>Nombre completo:<br><input type="text" name="nombre" required></label><br>
-      <label>Dirección:<br><input type="text" name="direccion" required></label><br>
-      <label>Ciudad:<br><input type="text" name="ciudad" required></label><br>
-      <label>Código postal:<br><input type="text" name="cp" required></label><br>
-      <button class="btn-cart" type="submit">Continuar al resumen</button>
-    </form>
-  </section>
-
-  <!-- Sección Resumen -->
-  <section id="seccion-resumen" style="display:none;">
-    <h3>Resumen</h3>
-    <div id="detalle-envio"></div>
-    <ul id="resumen-carrito"></ul>
-    <p>Total: $<span id="resumen-total">0</span></p>
-    <button class="btn-cart" onclick="volverAEnvio()">Volver al envío</button>
-    <button class="btn-cart" onclick="mostrarPago()">Ir al pago</button>
-  </section>
-
-  <!-- Confirmación -->
-  <section id="seccion-confirmacion" style="display:none;text-align:center;">
-    <h3>¡Gracias por tu compra! 💖</h3>
-    <p>Te enviaremos un mail con los detalles.</p>
-    <button class="btn-cart" onclick="irAlInicio()">Volver al inicio</button>
-  </section>
-
-  <!-- Botones principales anclados abajo -->
-  <div class="cart-actions">
-    <button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
-    <button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
-  </div>
-</aside>
-
-
-  <!-- (Secciones de envío, resumen, pago y confirmación siguen igual) -->
-  <!-- Sólo agregó id="btn-pagar" al botón de Mercado Pago -->
-  <section id="seccion-pago" style="display:none;padding:20px;max-width:600px;margin:0 auto;">
-    <h2>Pago</h2>
-    <label><input type="radio" name="pago" value="mp" checked> Mercado Pago</label>
-    <p style="margin:0 0 1rem 20px;">Pagá de forma segura con Mercado Pago.</p>
-    <button class="btn" id="btn-pagar">Pagar con Mercado Pago</button>
-  </section>
-
-  <!-- Notificación -->
   <div id="notificacion" class="notificacion"></div>
 
-  <!-- Tu lógica JS -->
   <script src="main.js" defer></script>
 </body>
 </html>
