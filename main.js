@@ -111,6 +111,83 @@ async function pagarConMercadoPago(){
     alert('Error al iniciar el pago. Intenta de nuevo.');
   }
 }
+<section id="seccion-envio" style="display:none;padding:20px;max-width:600px;margin:0 auto;">
+  <h2>Datos de Envío</h2>
+  <form id="form-envio">
+    <label>Nombre completo:<br><input type="text" name="nombre" required></label><br><br>
+    <label>Dirección:<br><input type="text" name="direccion" required></label><br><br>
+    <label>Ciudad:<br><input type="text" name="ciudad" required></label><br><br>
+    <label>Código postal:<br><input type="text" name="cp" required></label><br><br>
+    <button class="btn" type="submit">Continuar al pago</button>
+  </form>
+</section>
+let datosEnvio = {};
+
+function mostrarEnvio() {
+  $('#carrito').classList.remove('open');
+  $('#seccion-envio').style.display = 'block';
+  window.scrollTo({ top: $('#seccion-envio').offsetTop - 20, behavior: 'smooth' });
+}
+
+document.getElementById('form-envio').addEventListener('submit', function(e){
+  e.preventDefault();
+  const fd = new FormData(this);
+  datosEnvio = Object.fromEntries(fd.entries());
+
+  // Mostrar datos en resumen
+  $('#detalle-envio').innerHTML = `
+    <p><strong>Nombre:</strong> ${datosEnvio.nombre}</p>
+    <p><strong>Dirección:</strong> ${datosEnvio.direccion}, ${datosEnvio.ciudad} (${datosEnvio.cp})</p>
+  `;
+
+  // Mostrar productos
+  const ul = $('#resumen-carrito');
+  ul.innerHTML = '';
+  let total = 0;
+  carrito.forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = `${p.nombre} x${p.cantidad} - $${(p.precio * p.cantidad).toLocaleString('es-AR')}`;
+    ul.appendChild(li);
+    total += p.precio * p.cantidad;
+  });
+  $('#resumen-total').textContent = total.toLocaleString('es-AR');
+
+  // Mostrar sección resumen
+  $('#seccion-envio').style.display = 'none';
+  $('#seccion-resumen').style.display = 'block';
+  window.scrollTo({ top: $('#seccion-resumen').offsetTop - 20, behavior: 'smooth' });
+});
+
+function volverAEnvio() {
+  $('#seccion-resumen').style.display = 'none';
+  $('#seccion-envio').style.display = 'block';
+}
+
+function mostrarPago() {
+  $('#seccion-resumen').style.display = 'none';
+  $('#seccion-pago').style.display = 'block';
+  window.scrollTo({ top: $('#seccion-pago').offsetTop - 20, behavior: 'smooth' });
+}
+
+function mostrarConfirmacion() {
+  $('#seccion-pago').style.display = 'none';
+  $('#seccion-confirmacion').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function irAlInicio() {
+  $('#seccion-confirmacion').style.display = 'none';
+  vaciarCarrito();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('form-envio').addEventListener('submit', function(e){
+  e.preventDefault();
+  // Aquí podrías validar datos o guardarlos
+  document.getElementById('seccion-envio').style.display = 'none';
+  document.getElementById('seccion-pago').style.display = 'block';
+  window.scrollTo({ top: document.getElementById('seccion-pago').offsetTop - 20, behavior: 'smooth' });
+});
 
 /* -------- EXPORTAR a window para HTML inline -------- */
 window.toggleCart    = toggleCart;
