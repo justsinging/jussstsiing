@@ -78,21 +78,6 @@ const contenedorProductos = document.getElementById('contenedor-productos');
 const contenedorCarrito = document.getElementById('carrito-contenido');
 const contadorCarrito = document.getElementById('contadorCarrito');
 const precioTotal = document.getElementById('precioTotal');
-
-// FUNCIONES PRINCIPALES
-function mostrarProductos(productos) {
-    contenedorProductos.innerHTML = '';
-    productos.forEach((producto) => {
-        const div = document.createElement('div');
-        div.classList.add('producto');
-        div.innerHTML = `
-            <img src="${producto.imagen}" alt="${producto.nombre}">
-            <h3>${producto.nombre}</h3>
-            <p class="precio">$${producto.precio}</p>
-            <button class="boton-agregar" onclick="agregarProducto(${producto.id})">Agregar al carrito</button>
-        `;
-        contenedorProductos.appendChild(div);
-    });
 }
 
 function agregarProducto(id) {
