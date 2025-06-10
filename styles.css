@@ -9,7 +9,7 @@ body {
 h2 {
   font-family: 'Alfa Slab One', cursive;
   font-size: 2rem;
-  color: #cc2277;
+  color: #6b0f1a;
   margin-top: 2rem;
   text-align: center;
 }
@@ -148,7 +148,7 @@ label {
 .producto h3 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
-  color: #cc2277;
+  color: #6b0f1a;
 }
 
 .producto p {
@@ -180,7 +180,7 @@ ul li {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #cc2277;
+  background-color: #6b0f1a;
   color: white;
   padding: 12px 20px;
   border-radius: 10px;
