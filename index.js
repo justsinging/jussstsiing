@@ -213,19 +213,3 @@ document.addEventListener('DOMContentLoaded', () => {
   mostrarProductos();  // sin argumentos
   actualizarCarrito();
 });
-
-function mostrarProductos() {
-  const contenedor = document.getElementById("productos");
-  contenedor.innerHTML = ''; // limpiar antes de renderizar
-  productosData.forEach((producto) => {
-    const div = document.createElement("div");
-    div.classList.add("producto");
-    div.innerHTML = `
-      <img src="${producto.imagen}" alt="${producto.nombre}">
-      <h3>${producto.nombre}</h3>
-      <p>$${producto.precio}</p>
-      <button class="btn" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
-    `;
-    contenedor.appendChild(div);
-  });
-}
