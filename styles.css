@@ -7,7 +7,7 @@ body {
 }
 
 h2 {
-  font-family: 'Alfa Slab One', cursive;
+  font-family: 'Piazzolla', cursive;
   font-size: 2rem;
   color: #6b0f1a;
   margin-top: 2rem;
@@ -40,7 +40,7 @@ input[type="text"] {
 }
 
 .store-title {
-  font-family: 'Alfa Slab One', cursive;
+  font-family: 'Instrument Sans', cursive;
   font-size: 2rem;
   letter-spacing: 1px;
 }
