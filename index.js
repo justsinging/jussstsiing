@@ -49,7 +49,7 @@ const productos = [
   }
 {
     id: 7,
-    nombre: "Bolsa Olivo",
+    nombre: "Bolsa Frutis",
     precio: 18000,
     imagen: "https://i.imgur.com/YXYUHHr.jpeg",
     imagenes: ["https://i.imgur.com/DzJc6iO.jpeg"],
