@@ -319,3 +319,15 @@ section {
 .cart-actions .btn-cart:hover {
   background-color: #8c1221;
 }
+.notificacion {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #6b0f1a;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: none;
+  z-index: 1100;
+  font-weight: bold;
+}
