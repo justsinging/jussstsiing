@@ -331,3 +331,56 @@ section {
   z-index: 1100;
   font-weight: bold;
 }
+.detalle-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fffdf6;
+}
+
+.detalle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.detalle-imagenes {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detalle-thumb {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.detalle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detalle-info h2 {
+  font-size: 2rem;
+  color: #6b0f1a;
+}
+
+.detalle-precio {
+  font-size: 1.6rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.detalle-descripcion {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+.envio-section {
+  margin-top: 2rem;
+}
