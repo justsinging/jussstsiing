@@ -1,35 +1,40 @@
+// Obtener ID del producto desde la URL
 const params = new URLSearchParams(window.location.search);
-const id = params.get('id');
+const id = params.get("id");
 
-const productos = JSON.parse(localStorage.getItem('productos')) || [];
+// Traer productos desde localStorage
+const productos = JSON.parse(localStorage.getItem("productos")) || [];
 const producto = productos.find(p => p.id == id);
-const contenedor = document.getElementById('detalle-producto');
+
+const contenedor = document.getElementById("detalle-producto");
 
 if (producto) {
   contenedor.innerHTML = `
-    <div class="detalle">
-      <div class="imagenes">
-        ${producto.imagenes.map(img => `<img src="${img}" alt="${producto.nombre}">`).join('')}
+    <div class="detalle-grid">
+      <div class="detalle-imagenes">
+        ${producto.imagenes.map(img => `<img src="${img}" alt="${producto.nombre}" class="detalle-thumb">`).join("")}
       </div>
-      <div class="info">
+      <div class="detalle-info">
         <h2>${producto.nombre}</h2>
-        <p class="precio">$${producto.precio}</p>
-        <p>${producto.detalles || 'Sin descripción adicional.'}</p>
+        <p class="detalle-precio">$${producto.precio}</p>
+        <p class="detalle-descripcion">${producto.descripcion || 'Sin descripción.'}</p>
+        <button class="btn" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
       </div>
     </div>
   `;
 } else {
-  contenedor.innerHTML = '<p>Producto no encontrado.</p>';
+  contenedor.innerHTML = "<p>Producto no encontrado.</p>";
 }
 
-document.getElementById('form-envio-producto').addEventListener('submit', e => {
+// Envío
+document.getElementById("form-envio-producto").addEventListener("submit", e => {
   e.preventDefault();
-  const cp = document.getElementById('cp-envio').value;
-  const resultado = document.getElementById('resultado-envio');
+  const cp = document.getElementById("cp-envio").value;
+  const resultado = document.getElementById("resultado-envio");
 
   if (cp.length === 4 || cp.length === 5) {
     resultado.textContent = `El costo de envío a ${cp} es de $1500.`;
   } else {
-    resultado.textContent = 'Por favor ingresá un código postal válido.';
+    resultado.textContent = "Por favor ingresá un código postal válido.";
   }
 });
