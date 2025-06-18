@@ -9,7 +9,7 @@ const producto = productos.find((p) => [p.id](http://p.id/) == id);
 const contenedor = document.getElementById("detalle-producto");
 
 if (producto) {
-contenedor.innerHTML =     `<div class="detalle">       <div class="imagenes">         ${producto.imagenes           .map((img) =>`<img src="${img}" alt="${producto.nombre}">`)           .join("")}       </div>       <div class="info">         <h2>${producto.nombre}</h2>         <p class="precio">$${producto.precio}</p>         <p>${producto.descripcion || "Sin descripción adicional."}</p>         <form id="form-envio-producto">           <label for="cp-envio">Código postal:</label>           <input type="text" id="cp-envio" name="cp" required>           <button type="submit">Calcular envío</button>         </form>         <div id="resultado-envio"></div>       </div>     </div>`   ;
+contenedor.innerHTML = `<div class="detalle"> <div class="imagenes"> ${producto.imagen((img) =>`<img src="${img}" alt="${producto.nombre}">`).join("")}</div> <div class="info"> <h2>${producto.nombre}</h2> <p class="precio">$${producto.precio}</p>         <p>${producto.descripcion || "Sin descripción adicional."}</p>         <form id="form-envio-producto">           <label for="cp-envio">Código postal:</label>           <input type="text" id="cp-envio" name="cp" required>           <button type="submit">Calcular envío</button>         </form>         <div id="resultado-envio"></div>       </div>     </div>`   ;
 } else {
 contenedor.innerHTML = "<p>Producto no encontrado.</p>";
 }
