@@ -2,24 +2,36 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="detalle-container">
-    <div id="detalle-producto" class="detalle"></div>
+  <main class="detalle-pagina">
+    <div class="detalle-layout">
+      <div class="galeria-miniaturas" id="galeria-miniaturas"></div>
+      <div class="imagen-principal">
+        <img id="imagen-principal" src="" alt="Imagen del producto" />
+      </div>
+      <div class="detalle-info">
+        <p class="breadcrumb">Inicio > Productos > <span id="breadcrumb-nombre"></span></p>
+        <h2 id="nombre-producto"></h2>
+        <p id="precio-producto" class="detalle-precio"></p>
+        <p>Una sola unidad</p>
+        <button class="btn" id="agregar-carrito">Agregar al carrito</button>
 
-    <section class="envio-section">
-      <h3>Calcular envío</h3>
-      <form id="form-envio-producto">
-        <label>Código Postal:
-          <input type="text" id="cp-envio" required>
-        </label>
-        <button type="submit" class="btn">Calcular</button>
-      </form>
-      <p id="resultado-envio"></p>
-    </section>
+        <section class="envio-section">
+          <h3>Medios de envío</h3>
+          <form id="form-envio-producto">
+            <input type="text" id="cp-envio" placeholder="Tu código postal" required>
+            <button type="submit" class="btn">Calcular</button>
+          </form>
+          <p id="resultado-envio"></p>
+        </section>
+
+        <div class="detalle-descripcion" id="descripcion-producto"></div>
+      </div>
+    </div>
   </main>
 
   <script src="producto.js" defer></script>
