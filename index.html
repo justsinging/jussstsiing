@@ -1,89 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Just Sing</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Just Sing</title>
 
-<!-- Fuentes -->
-<link href="https://fonts.googleapis.com/css2?family=Piazzolla:ital,opsz,wght@0,8..30,100..900;1,8..30,100..900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Piazzolla:ital,opsz,wght@0,8..30,100..900;1,8..30,100..900&display=swap" rel="stylesheet">
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Piazzolla:ital,opsz,wght@0,8..30,100..900;1,8..30,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
-<!-- Mercado Pago -->
-<script src="https://sdk.mercadopago.com/js/v2"></script>
+  <!-- Mercado Pago -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
 
-<!-- Estilos -->
-<link rel="stylesheet" href="styles.css">
-<script src="main.js" defer></script>
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Scripts -->
+  <script src="index.js" defer></script>
+  <script src="main.js" defer></script>
 </head>
 <body>
-<header class="store-header">
-<div class="store-title">JustSing</div>
-<button class="cart-button" onclick="toggleCart()">
-🛒 <span id="cart-count" class="cart-count">0</span>
-</button>
-</header>
+  <header class="store-header">
+    <div class="store-title">JustSing</div>
+    <button class="cart-button" onclick="toggleCart()">
+      🛒 <span id="cart-count" class="cart-count">0</span>
+    </button>
+  </header>
 
-<main>
-<h2 style="text-align:center; margin-top: 1rem;">Productos</h2>
-<div id="productos" class="container"></div>
+  <main>
+    <h2 style="text-align:center; margin-top: 1rem;">Productos</h2>
+    <div id="productos" class="container"></div>
 
-```
-<!-- Formulario de envío -->
-<section id="form-envio-section" style="display: none;">
-  <h2>Datos de Envío</h2>
-  <form id="form-envio">
-    <label>Nombre completo:<br><input type="text" name="nombre" required></label><br><br>
-    <label>Dirección:<br><input type="text" name="direccion" required></label><br><br>
-    <label>Ciudad:<br><input type="text" name="ciudad" required></label><br><br>
-    <label>Código postal:<br><input type="text" name="cp" required></label><br><br>
-    <button class="btn" type="submit">Continuar al resumen</button>
-  </form>
-</section>
+    <!-- Formulario de envío -->
+    <section id="form-envio-section" style="display: none;">
+      <h2>Datos de Envío</h2>
+      <form id="form-envio">
+        <label>Nombre completo:<br><input type="text" name="nombre" required></label><br><br>
+        <label>Dirección:<br><input type="text" name="direccion" required></label><br><br>
+        <label>Ciudad:<br><input type="text" name="ciudad" required></label><br><br>
+        <label>Código postal:<br><input type="text" name="cp" required></label><br><br>
+        <button class="btn" type="submit">Continuar al resumen</button>
+      </form>
+    </section>
 
-<!-- Resumen del pedido -->
-<section id="seccion-resumen" style="display:none;">
-  <h2>Resumen del Pedido</h2>
-  <div id="detalle-envio"></div>
-  <ul id="resumen-carrito"></ul>
-  <p>Total: $<span id="resumen-total">0</span></p>
-  <button class="btn" onclick="volverAEnvio()">Volver al envío</button>
-  <button class="btn" onclick="mostrarPago()">Ir al pago</button>
-</section>
+    <!-- Resumen del pedido -->
+    <section id="seccion-resumen" style="display:none;">
+      <h2>Resumen del Pedido</h2>
+      <div id="detalle-envio"></div>
+      <ul id="resumen-carrito"></ul>
+      <p>Total: $<span id="resumen-total">0</span></p>
+      <button class="btn" onclick="volverAEnvio()">Volver al envío</button>
+      <button class="btn" onclick="mostrarPago()">Ir al pago</button>
+    </section>
 
-<!-- Confirmación -->
-<section id="seccion-confirmacion" style="display:none;">
-  <h2>¡Gracias por tu compra! 💖</h2>
-  <p>Te enviaremos un mail con los detalles.</p>
-  <button class="btn" onclick="irAlInicio()">Volver al inicio</button>
-</section>
+    <!-- Confirmación -->
+    <section id="seccion-confirmacion" style="display:none;">
+      <h2>¡Gracias por tu compra! 💖</h2>
+      <p>Te enviaremos un mail con los detalles.</p>
+      <button class="btn" onclick="irAlInicio()">Volver al inicio</button>
+    </section>
 
-<!-- Pago -->
-<section id="seccion-pago" style="display:none;">
-  <h2>Pago</h2>
-  <label><input type="radio" name="pago" value="mp" checked> Mercado Pago</label>
-  <p style="margin:0 0 1rem 20px;">Pagá de forma segura con Mercado Pago.</p>
-  <button class="btn" id="btn-pagar">Pagar con Mercado Pago</button>
-</section>
+    <!-- Pago -->
+    <section id="seccion-pago" style="display:none;">
+      <h2>Pago</h2>
+      <label><input type="radio" name="pago" value="mp" checked> Mercado Pago</label>
+      <p style="margin:0 0 1rem 20px;">Pagá de forma segura con Mercado Pago.</p>
+      <button class="btn" id="btn-pagar">Pagar con Mercado Pago</button>
+    </section>
+  </main>
 
-```
+  <!-- Carrito lateral -->
+  <aside id="carrito" class="cart-sidebar">
+    <button class="cart-close" onclick="toggleCart()">✖</button>
+    <h2>Carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <p>Total: $<span id="total">0</span></p>
+    <div class="cart-actions">
+      <button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
+      <button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
+    </div>
+  </aside>
 
-</main>
-
-<!-- Carrito lateral -->
-<aside id="carrito" class="cart-sidebar">
-<button class="cart-close" onclick="toggleCart()">✖</button>
-<h2>Carrito</h2>
-<ul id="lista-carrito"></ul>
-<p>Total: $<span id="total">0</span></p>
-<div class="cart-actions">
-<button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
-<button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
-</div>
-</aside>
-
-<!-- Notificación flotante -->
-<div id="notificacion" class="notificacion"></div>
+  <!-- Notificación -->
+  <div id="notificacion" class="notificacion"></div>
 </body>
-
 </html>
