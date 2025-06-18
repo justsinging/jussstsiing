@@ -135,6 +135,16 @@ function mostrarNotificacion(mensaje) {
     noti.style.display = "none";
   }, 2000);
 }
+function mostrarNotificacion(mensaje) {
+  const noti = document.getElementById("notificacion");
+  noti.textContent = mensaje;
+  noti.style.display = "block";
+
+  // Oculta la notificación luego de 2 segundos
+  setTimeout(() => {
+    noti.style.display = "none";
+  }, 2000);
+}
 
 function mostrarEnvio() {
   document.getElementById("form-envio-section").style.display = "block";
@@ -159,3 +169,16 @@ function irAlInicio() {
 // Inicialización
 renderizarProductos();
 actualizarCarrito();
+function agregarAlCarrito(id) {
+  const producto = productos.find(p => p.id === id);
+  const enCarrito = carrito.find(p => p.id === id);
+  
+  if (enCarrito) {
+    mostrarNotificacion("Ya agregaste este producto al carrito");
+    return;
+  }
+
+  carrito.push({ ...producto, cantidad: 1 });
+  actualizarCarrito();
+  mostrarNotificacion("Producto agregado al carrito");
+}
