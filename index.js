@@ -23,6 +23,38 @@ const productos = [
     imagenes: ["https://i.imgur.com/5qZhCNO.jpeg"],
     detalles: "Medidas: 28x33 - Telas: Tusor Gris - Gris oscuro - Cinta de algodón natural"
   }
+  {
+    id: 4,
+    nombre: "Bolsa Lavanda",
+    precio: 16500,
+    imagen: "https://i.imgur.com/XdEL6D9.jpeg",
+    imagenes: ["https://i.imgur.com/5qZhCNO.jpeg"],
+    detalles: "Medidas: 33x34 - Telas: Tusor Gris - Cinta de algodón natural"
+  }
+{
+    id: 5,
+    nombre: "Bolsa Florero",
+    precio: 20000,
+    imagen: "https://i.imgur.com/MTxPBeC.jpeg",
+    imagenes: ["https://i.imgur.com/l2vmhs6.jpeg"],
+    detalles: "Medidas: 50x46 - Telas: Tusor Mostaza - Cinta de algodón natural"
+  }
+{
+    id: 6,
+    nombre: "Bolsa Olivo",
+    precio: 13000,
+    imagen: "https://i.imgur.com/z1EjOsG.jpeg",
+    imagenes: ["https://i.imgur.com/xazPdir.jpeg"],
+    detalles: "Medidas: 34x28 - Telas: Tusor Verde - Cinta de algodón natural"
+  }
+{
+    id: 7,
+    nombre: "Bolsa Olivo",
+    precio: 18000,
+    imagen: "https://i.imgur.com/YXYUHHr.jpeg",
+    imagenes: ["https://i.imgur.com/DzJc6iO.jpeg"],
+    detalles: "Medidas: 28x33 - Telas: Tusor Mostaza - Cinta de algodón natural"
+  }
 ];
 
 // Guardar productos en localStorage
