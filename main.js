@@ -94,16 +94,19 @@ function renderizarProductos() {
     const div = document.createElement("div");
     div.classList.add("producto");
 
-    div.innerHTML = `
-      <a href="detalle.html?id=${producto.id}" class="img-hover-container">
-        <img src="${producto.imagen}" class="producto-imagen base" />
-        <img src="${producto.imagenes[0]}" class="producto-imagen hover" />
-      </a>
+   div.innerHTML = `
+  <div class="producto-content">
+    <a href="detalle.html?id=${producto.id}" class="producto-imagen-container">
+      <img src="${producto.imagen}" class="producto-imagen base" alt="${producto.nombre}" />
+      <img src="${producto.imagenes[0]}" class="producto-imagen hover" alt="${producto.nombre} - Vista detalle" />
+    </a>
+    <div class="producto-info">
       <h3 class="producto-nombre">${producto.nombre}</h3>
       <p class="producto-precio">$${producto.precio}</p>
       <button class="btn" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
-    `;
-
+    </div>
+  </div>
+`;
     contenedor.appendChild(div);
   });
 }
