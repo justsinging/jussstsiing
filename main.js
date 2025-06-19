@@ -91,11 +91,12 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 function renderizarProductos() {
   contenedor.innerHTML = "";
   productos.forEach(p => {
+    const tieneHover = p.imagenes.length > 1 ? `data-hover="${p.imagenes[1]}"` : "";
     const div = document.createElement("div");
     div.classList.add("producto");
     div.innerHTML = `
       <a href="producto.html?id=${p.id}" target="_blank">
-        <img src="${p.imagen}" alt="${p.nombre}" class="producto-imagen" />
+        <img src="${p.imagen}" alt="${p.nombre}" class="producto-imagen" ${tieneHover} />
         <h3 class="producto-nombre">${p.nombre}</h3>
       </a>
       <p class="producto-precio">$${p.precio}</p>
@@ -103,7 +104,18 @@ function renderizarProductos() {
     `;
     contenedor.appendChild(div);
   });
+
+  // Agrega efecto hover dinámico
+  document.querySelectorAll('.producto-imagen').forEach(img => {
+    const original = img.src;
+    const hover = img.getAttribute("data-hover");
+    if (hover) {
+      img.addEventListener("mouseenter", () => img.src = hover);
+      img.addEventListener("mouseleave", () => img.src = original);
+    }
+  });
 }
+
 
 function agregarAlCarrito(id) {
   const producto = productos.find(p => p.id === id);
