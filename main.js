@@ -1,3 +1,31 @@
+.img-hover-container {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.img-hover-container .producto-imagen {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+
+.img-hover-container .producto-imagen.hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.img-hover-container:hover .producto-imagen.hover {
+  opacity: 1;
+}
+
+.img-hover-container:hover .producto-imagen.base {
+  opacity: 0;
+}
 // main.js
 
 const productos = [
@@ -108,18 +136,6 @@ function renderizarProductos() {
     contenedor.appendChild(div);
   });
 }
-
-  // Agrega efecto hover dinámico
-  document.querySelectorAll('.producto-imagen').forEach(img => {
-    const original = img.src;
-    const hover = img.getAttribute("data-hover");
-    if (hover) {
-      img.addEventListener("mouseenter", () => img.src = hover);
-      img.addEventListener("mouseleave", () => img.src = original);
-    }
-  });
-}
-
 
 function agregarAlCarrito(id) {
   const producto = productos.find(p => p.id === id);
