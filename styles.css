@@ -83,38 +83,62 @@ h1, h2, h3, h4, h5 {
 }
 
 .producto {
-  background: var(--tarjeta-bg);
+  background: transparent;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.075);
+  box-shadow: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
 }
 
+.producto {
+  background: transparent; /* Quita el fondo blanco */
+  box-shadow: none; /* Elimina la sombra si no la quieres */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra todo el contenido */
+  text-align: center; /* Texto centrado */
+  padding: 0;
+}
+
 .producto:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transform: none; /* Elimina la animación de hover si no la quieres */
+  box-shadow: none;
 }
-
-.producto .producto-nombre {
-  font-size: 1.2rem;
-  margin: 0.75rem 1rem 0.25rem;
-}
-
-.producto .producto-precio {
+.producto-precio {
   font-size: 1rem;
   font-weight: bold;
-  margin: 0 1rem 0.75rem;
+  margin: 0.5rem 0;
   color: var(--primario);
+  width: 100%;
 }
 
-/* Efecto hover imágenes */
+/* Añade esto para el contenedor de la imagen */
 .img-hover-container {
-  position: relative;
-  display: block;
-  overflow: hidden;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+/* Estilos para los textos y botón */
+.producto-nombre {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  width: 100%;
+  color: var(--texto);
 }
 
+.producto-precio {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  color: var(--primario);
+  width: 100%;
+}
+
+.producto .btn {
+  margin: 0.5rem 0 0;
+  width: auto;
+  padding: 0.5rem 1.5rem;
+}
 .img-hover-container .producto-imagen {
   display: block;
   width: 100%;
