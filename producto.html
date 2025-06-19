@@ -3,26 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalle del Producto</title>
+  <title>Detalle del Producto - JustSing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Piazzolla:ital,opsz,wght@0,8..30,100..900;1,8..30,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     /* Estilos específicos para la página de detalle */
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background-color: #FFFCF2;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    
     .detalle-container {
       max-width: 1200px;
-      margin: 2rem auto;
-      padding: 1rem;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .detalle-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      margin-bottom: 20px;
+    }
+    
+    .detalle-header h1 {
+      font-family: 'Piazzolla', serif;
+      color: #6B0F1A;
+      margin: 0;
+    }
+    
+    .back-button {
+      background: #253142;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Instrument Sans', sans-serif;
     }
     
     .detalle-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      gap: 30px;
     }
     
     .detalle-imagenes {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 15px;
     }
     
     .detalle-thumb {
@@ -30,7 +63,7 @@
       max-height: 500px;
       object-fit: contain;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     
     .miniaturas {
@@ -43,10 +76,10 @@
       width: 80px;
       height: 80px;
       object-fit: cover;
-      border-radius: 6px;
-      border: 2px solid transparent;
+      border-radius: 4px;
+      border: 2px solid #ddd;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
     }
     
     .miniaturas img:hover {
@@ -57,13 +90,13 @@
     .detalle-info {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 15px;
     }
     
-    .detalle-info h2 {
+    #nombre-producto {
       font-size: 2rem;
       color: #6B0F1A;
-      margin-bottom: 0.5rem;
+      margin: 0;
     }
     
     .detalle-precio {
@@ -78,8 +111,8 @@
     }
     
     .envio-section {
-      margin-top: 2rem;
-      padding: 1.5rem;
+      margin-top: 30px;
+      padding: 20px;
       background: white;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -88,60 +121,81 @@
     #form-envio-producto {
       display: flex;
       gap: 10px;
-      margin-top: 1rem;
+      margin-top: 15px;
     }
     
     #cp-envio {
       flex: 1;
-      padding: 0.75rem;
+      padding: 10px;
       border: 1px solid #ddd;
-      border-radius: 6px;
+      border-radius: 4px;
+      font-family: 'Instrument Sans', sans-serif;
     }
     
     #resultado-envio {
-      margin-top: 1rem;
+      margin-top: 15px;
       font-weight: 500;
       color: #6B0F1A;
+    }
+    
+    .btn {
+      background: #6B0F1A;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Instrument Sans', sans-serif;
+      transition: background 0.2s ease;
+    }
+    
+    .btn:hover {
+      background: #8c1221;
     }
     
     @media (max-width: 768px) {
       .detalle-grid {
         grid-template-columns: 1fr;
       }
+      
+      .detalle-thumb {
+        max-height: 400px;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="store-header">
-    <div class="store-title">JustSing</div>
-    <button class="cart-button" onclick="window.location.href='index.html'">
-      ← Volver a productos
-    </button>
-  </header>
-
-  <main class="detalle-container">
-    <div class="detalle-grid" id="detalle-producto">
-      <div class="detalle-imagenes">
-        <img id="imagen-principal" class="detalle-thumb" src="" alt="">
-        <div id="galeria-miniaturas" class="miniaturas"></div>
-      </div>
-      <div class="detalle-info">
-        <h2 id="nombre-producto"></h2>
-        <p class="detalle-precio" id="precio-producto"></p>
-        <div id="descripcion-producto" class="detalle-descripcion"></div>
-        <button id="agregar-carrito" class="btn">Agregar al carrito</button>
-      </div>
-    </div>
+  <div class="detalle-container">
+    <header class="detalle-header">
+      <h1>JustSing</h1>
+      <button class="back-button" onclick="window.location.href='index.html'">← Volver a productos</button>
+    </header>
     
-    <section class="envio-section">
-      <h3>Medios de envío</h3>
-      <form id="form-envio-producto">
-        <input type="text" id="cp-envio" placeholder="Tu código postal" required>
-        <button type="submit" class="btn">Calcular</button>
-      </form>
-      <p id="resultado-envio"></p>
-    </section>
-  </main>
+    <main>
+      <div class="detalle-grid" id="detalle-producto">
+        <div class="detalle-imagenes">
+          <img id="imagen-principal" class="detalle-thumb" src="" alt="">
+          <div id="galeria-miniaturas" class="miniaturas"></div>
+        </div>
+        <div class="detalle-info">
+          <h2 id="nombre-producto"></h2>
+          <p class="detalle-precio" id="precio-producto"></p>
+          <div id="descripcion-producto" class="detalle-descripcion"></div>
+          <button id="agregar-carrito" class="btn">Agregar al carrito</button>
+        </div>
+      </div>
+      
+      <section class="envio-section">
+        <h3>Medios de envío</h3>
+        <form id="form-envio-producto">
+          <input type="text" id="cp-envio" placeholder="Tu código postal" required>
+          <button type="submit" class="btn">Calcular envío</button>
+        </form>
+        <p id="resultado-envio"></p>
+      </section>
+    </main>
+  </div>
+  
   <script src="producto.js"></script>
 </body>
 </html>
