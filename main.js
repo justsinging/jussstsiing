@@ -1,3 +1,10 @@
+// Agregar al inicio del archivo:
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const listaCarrito = document.getElementById("lista-carrito");
+const totalSpan = document.getElementById("total");
+const cartCount = document.getElementById("cart-count");
+
+// Eliminar la función duplicada mostrarNotificacion()
 .img-hover-container {
   position: relative;
   display: block;
