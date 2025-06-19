@@ -28,7 +28,7 @@
 }
 // main.js
 
-const productos = [
+const productosDePrueba = [
   {
     id: 1,
     nombre: "Bolsa Mujer",
@@ -37,18 +37,17 @@ const productos = [
     imagenes: [
       "https://i.imgur.com/QjtmBJJ.jpeg",
       "https://i.imgur.com/QjtmBJJ.jpeg"
-    ],
-    descripcion: "Medidas: 25x29 - Telas: Tusor Mostaza - Cinta de algodón natural"
+    ]
   },
   {
+   
     id: 2,
     nombre: "Bolsa Mida",
     precio: 19000,
     imagen: "https://i.imgur.com/RTeouUR.jpeg",
     imagenes: ["img/tote2.jpg",
                "img/tote2.jpg"
-               ],
-    descripcion: "Medidas: 46x33 - Telas: Tusor Gris - Cinta de algodón natural"
+               ]
   },
   {
     id: 3,
@@ -58,8 +57,7 @@ const productos = [
     imagenes: [
       "https://i.imgur.com/5qZhCNO.jpeg",
       "https://i.imgur.com/5qZhCNO.jpeg"
-    ],
-    descripcion: "Medidas: 28x33 - Telas: Tusor Gris - Gris oscuro - Cinta de algodón natural"
+    ]
   },
   {
     id: 4,
@@ -69,8 +67,7 @@ const productos = [
     imagenes: [
       "https://i.imgur.com/XdEL6D9.jpeg",
       "https://i.imgur.com/XdEL6D9.jpeg"
-    ],
-    descripcion: "Medidas: 33x34 - Telas: Tusor Gris - Cinta de algodón natural"
+    ]
   },
   {
     id: 5,
@@ -80,8 +77,7 @@ const productos = [
     imagenes: [
       "https://i.imgur.com/l2vmhs6.jpeg",
       "https://i.imgur.com/l2vmhs6.jpeg"
-    ],
-    descripcion: "Medidas: 50x46 - Telas: Tusor Mostaza - Cinta de algodón natural"
+    ]
   },
   {
     id: 6,
@@ -92,8 +88,7 @@ const productos = [
       "https://i.imgur.com/xazPdir.jpeg",
       "https://i.imgur.com/xazPdir.jpeg",
       "https://i.imgur.com/iDa2OQ4.jpeg"
-    ],
-    descripcion: "Medidas: 34x28 - Telas: Tusor Verde - Cinta de algodón natural"
+    ]
   },
   {
     id: 7,
@@ -103,10 +98,13 @@ const productos = [
     imagenes: [
       "https://i.imgur.com/DzJc6iO.jpeg",
       "https://i.imgur.com/DzJc6iO.jpeg"
-      ],
-    descripcion: "Medidas: 28x33 - Telas: Tusor Mostaza - Cinta de algodón natural"
+      ]
   }
 ];
+if (!localStorage.getItem("productos")) {
+  localStorage.setItem("productos", JSON.stringify(productosDePrueba));
+}
+const productos = JSON.parse(localStorage.getItem("productos")) || [];
 
 localStorage.setItem("productos", JSON.stringify(productos)); // Guarda para usar en producto.html
 
