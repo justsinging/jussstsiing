@@ -39,9 +39,9 @@ const productosDePrueba = [
     id: 4,
     nombre: "Bolsa Lavanda",
     precio: 16500,
-    imagen: "https://i.imgur.com/BTUjfH7.jpeg",
+    imagen: "https://i.imgur.com/B6E9D7j.jpeg",
     imagenes: [
-      "https://i.imgur.com/QjtmBJJ.jpeg",
+      "https://i.imgur.com/XdEL6D9.jpeg",
     ],
     descripcion: "Medidas: 28x33 cm\nTelas: Tusor Gris oscuro\nCinta: Algodón Natural"
   },
