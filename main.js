@@ -29,9 +29,9 @@ const productosDePrueba = [
     id: 3,
     nombre: "Bolsa 13",
     precio: 13000,
-    imagen: "https://i.imgur.com/B6E9D7j.jpeg",
+    imagen: "https://i.imgur.com/BTUjfH7.jpeg",
     imagenes: [
-      "https://i.imgur.com/XdEL6D9.jpeg",
+      "https://i.imgur.com/5qZhCNO.jpeg",
     ],
     descripcion: "Medidas: 33x34 cm\nTelas: Tusor Gris claro y oscuro\nCinta: Algodón Natural"
   },
