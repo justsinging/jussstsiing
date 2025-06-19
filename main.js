@@ -13,9 +13,8 @@ const productosDePrueba = [
     imagen: "https://i.imgur.com/bMZdpKo.jpeg",
     imagenes: [
       "https://i.imgur.com/QjtmBJJ.jpeg",
-      "https://i.imgur.com/QjtmBJJ.jpeg"
     ],
-    descripcion: "Medidas: 30x40 cm\nTelas: Algodón orgánico\nCinta: Ajustable"
+    descripcion: "Medidas: 25x29cm\nTelas: Tusor Mostaza\nCinta: Algodón natural"
   },
   {
     id: 2,
@@ -23,12 +22,60 @@ const productosDePrueba = [
     precio: 19000,
     imagen: "https://i.imgur.com/RTeouUR.jpeg",
     imagenes: [
-      "https://i.imgur.com/RTeouUR.jpeg",
-      "https://i.imgur.com/RTeouUR.jpeg"
     ],
-    descripcion: "Medidas: 35x45 cm\nTelas: Lino reciclado\nCinta: Ajustable"
+    descripcion: "Medidas: 46x33 cm\nTelas: Tusor Gris Oscuro\nCinta: Algodón Natural"
   },
-  // ... (agregar descripción a todos los productos)
+{
+    id: 3,
+    nombre: "Bolsa 13",
+    precio: 13000,
+    imagen: "https://i.imgur.com/B6E9D7j.jpeg",
+    imagenes: [
+      "https://i.imgur.com/XdEL6D9.jpeg",
+    ],
+    descripcion: "Medidas: 33x34 cm\nTelas: Tusor Gris claro y oscuro\nCinta: Algodón Natural"
+  },
+  {
+    id: 4,
+    nombre: "Bolsa Lavanda",
+    precio: 16500,
+    imagen: "https://i.imgur.com/BTUjfH7.jpeg",
+    imagenes: [
+      "https://i.imgur.com/QjtmBJJ.jpeg",
+    ],
+    descripcion: "Medidas: 28x33 cm\nTelas: Tusor Gris oscuro\nCinta: Algodón Natural"
+  },
+  {
+    id: 5,
+    nombre: "Bolsa Florero",
+    precio: 20500,
+    imagen: "https://i.imgur.com/MTxPBeC.jpeg",
+    imagenes: [
+      "https://i.imgur.com/l2vmhs6.jpeg",
+    ],
+    descripcion: "Medidas: 50x46 cm\nTelas: Tusor Mostaza\nCinta: Algodón Natural"
+  },
+  {
+    id: 6,
+    nombre: "Bolsa Olivo",
+    precio: 13000,
+    imagen: "https://i.imgur.com/z1EjOsG.jpeg",
+    imagenes: [
+      "https://i.imgur.com/xazPdir.jpeg",
+      "https://i.imgur.com/iDa2OQ4.jpeg"
+    ],
+    descripcion: "Medidas: 34x28 cm\nTelas: Tusor Verde\nCinta: Algodón Natural"
+  },
+  {
+    id: 7,
+    nombre: "Bolsa Frutis",
+    precio: 18000,
+    imagen: "https://i.imgur.com/YXYUHHr.jpeg",
+    imagenes: [
+      "https://i.imgur.com/DzJc6iO.jpeg",
+    ],
+    descripcion: "Medidas: 31x29 cm\nTelas: Tusor Mostaza\nCinta: Algodón Natural"
+  },
 ];
 
 // Inicialización
