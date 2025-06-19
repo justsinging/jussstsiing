@@ -96,8 +96,8 @@ function renderizarProductos() {
 
     div.innerHTML = `
       <a href="detalle.html?id=${producto.id}" class="img-hover-container">
-        <img src="${producto.imagenes[0]}" class="producto-imagen base" />
-        <img src="${producto.imagenes[1]}" class="producto-imagen hover" />
+        <img src="${producto.imagen}" class="producto-imagen base" />
+        <img src="${producto.imagenes[0]}" class="producto-imagen hover" />
       </a>
       <h3 class="producto-nombre">${producto.nombre}</h3>
       <p class="producto-precio">$${producto.precio}</p>
