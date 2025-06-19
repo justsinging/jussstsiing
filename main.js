@@ -7,7 +7,7 @@ const productos = [
     precio: 18000,
     imagen: "https://i.imgur.com/bMZdpKo.jpeg",
     imagenes: [
-      "https://i.imgur.com/QjtmBJJ.jpeg"
+      "https://i.imgur.com/QjtmBJJ.jpeg",
       "https://i.imgur.com/QjtmBJJ.jpeg"
     ],
     descripcion: "Medidas: 25x29 - Telas: Tusor Mostaza - Cinta de algodón natural"
@@ -17,7 +17,9 @@ const productos = [
     nombre: "Bolsa Mida",
     precio: 19000,
     imagen: "https://i.imgur.com/RTeouUR.jpeg",
-    imagenes: ["img/tote2.jpg", "img/tote2b.jpg"],
+    imagenes: ["img/tote2.jpg",
+               "img/tote2.jpg"
+               ],
     descripcion: "Medidas: 46x33 - Telas: Tusor Gris - Cinta de algodón natural"
   },
   {
@@ -26,7 +28,7 @@ const productos = [
     precio: 13000,
     imagen: "https://i.imgur.com/BTUjfH7.jpeg",
     imagenes: [
-      "https://i.imgur.com/5qZhCNO.jpeg"
+      "https://i.imgur.com/5qZhCNO.jpeg",
       "https://i.imgur.com/5qZhCNO.jpeg"
     ],
     descripcion: "Medidas: 28x33 - Telas: Tusor Gris - Gris oscuro - Cinta de algodón natural"
@@ -37,7 +39,7 @@ const productos = [
     precio: 16500,
     imagen: "https://i.imgur.com/B6E9D7j.jpeg",
     imagenes: [
-      "https://i.imgur.com/XdEL6D9.jpeg"
+      "https://i.imgur.com/XdEL6D9.jpeg",
       "https://i.imgur.com/XdEL6D9.jpeg"
     ],
     descripcion: "Medidas: 33x34 - Telas: Tusor Gris - Cinta de algodón natural"
@@ -48,7 +50,7 @@ const productos = [
     precio: 20000,
     imagen: "https://i.imgur.com/MTxPBeC.jpeg",
     imagenes: [
-      "https://i.imgur.com/l2vmhs6.jpeg"
+      "https://i.imgur.com/l2vmhs6.jpeg",
       "https://i.imgur.com/l2vmhs6.jpeg"
     ],
     descripcion: "Medidas: 50x46 - Telas: Tusor Mostaza - Cinta de algodón natural"
@@ -59,8 +61,8 @@ const productos = [
     precio: 13000,
     imagen: "https://i.imgur.com/z1EjOsG.jpeg",
     imagenes: [
-      "https://i.imgur.com/xazPdir.jpeg"
-      "https://i.imgur.com/xazPdir.jpeg"
+      "https://i.imgur.com/xazPdir.jpeg",
+      "https://i.imgur.com/xazPdir.jpeg",
       "https://i.imgur.com/iDa2OQ4.jpeg"
     ],
     descripcion: "Medidas: 34x28 - Telas: Tusor Verde - Cinta de algodón natural"
