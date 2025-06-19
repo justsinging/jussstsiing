@@ -104,37 +104,32 @@ const productosDePrueba = [
 if (!localStorage.getItem("productos")) {
   localStorage.setItem("productos", JSON.stringify(productosDePrueba));
 }
+
 const productos = JSON.parse(localStorage.getItem("productos")) || [];
 
-localStorage.setItem("productos", JSON.stringify(productos)); // Guarda para usar en producto.html
-
-const contenedor = document.getElementById("productos");
-const listaCarrito = document.getElementById("lista-carrito");
-const cartCount = document.getElementById("cart-count");
-const totalSpan = document.getElementById("total");
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
 function renderizarProductos() {
-  contenedor.innerHTML = "";
-  productos.forEach(p => {
-    const imagenBase = p.imagen;
-    const imagenHover = p.imagenes[1] || p.imagen;
+  const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = ""; // limpiar antes de renderizar
 
+  productos.forEach(producto => {
     const div = document.createElement("div");
     div.classList.add("producto");
+
     div.innerHTML = `
-      <a href="producto.html?id=${p.id}" target="_blank" class="img-hover-container">
-        <img src="${imagenBase}" alt="${p.nombre}" class="producto-imagen base" />
-        <img src="${imagenHover}" alt="${p.nombre}" class="producto-imagen hover" />
+      <a href="detalle.html?id=${producto.id}" class="img-hover-container">
+        <img src="${producto.imagenes[0]}" class="producto-imagen base" />
+        <img src="${producto.imagenes[1]}" class="producto-imagen hover" />
       </a>
-      <h3 class="producto-nombre">${p.nombre}</h3>
-      <p class="producto-precio">$${p.precio}</p>
-      <button class="btn" onclick="agregarAlCarrito(${p.id})">Agregar al carrito</button>
+      <h3 class="producto-nombre">${producto.nombre}</h3>
+      <p class="producto-precio">$${producto.precio}</p>
+      <button class="btn" onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
     `;
+
     contenedor.appendChild(div);
   });
 }
 
+renderizarProductos();
 
 function agregarAlCarrito(id) {
   const producto = productos.find(p => p.id === id);
