@@ -139,29 +139,36 @@ h1, h2, h3, h4, h5 {
   width: auto;
   padding: 0.5rem 1.5rem;
 }
-.img-hover-container .producto-imagen {
-  display: block;
+/* Contenedor de imágenes del producto */
+.producto-imagen-container {
+  position: relative;
   width: 100%;
   aspect-ratio: 1;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.producto-imagen {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   transition: opacity 0.4s ease;
 }
 
-.img-hover-container .producto-imagen.hover {
+.producto-imagen.hover {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
 }
 
-.img-hover-container:hover .producto-imagen.hover {
+.producto-imagen-container:hover .producto-imagen.hover {
   opacity: 1;
 }
 
-.img-hover-container:hover .producto-imagen.base {
+.producto-imagen-container:hover .producto-imagen.base {
   opacity: 0;
 }
-
 /* Carrito lateral */
 .cart-sidebar {
   position: fixed;
@@ -341,4 +348,18 @@ h1, h2, h3, h4, h5 {
   .cart-sidebar.open {
     right: 0;
   }
+}
+/* Asegura que los enlaces no tengan estilos no deseados */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Estilo para el contenedor principal del producto */
+.producto-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
 }
