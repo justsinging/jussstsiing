@@ -69,10 +69,35 @@ if (!localStorage.getItem('productos')) {
   localStorage.setItem('productos', JSON.stringify(productos));
 }
 
-// Función para renderizar productos
+// Función para renderizar productos (versión mejorada)
 function renderizarProductos() {
   const contenedor = document.getElementById('productos');
+  if (!contenedor) return;
+
+  const productosGuardados = JSON.parse(localStorage.getItem('productos')) || [];
   
+  if (productosGuardados.length === 0) {
+    contenedor.innerHTML = '<p class="no-products">No hay productos disponibles</p>';
+    return;
+  }
+
+  contenedor.innerHTML = productosGuardados.map(producto => `
+    <div class="producto">
+      <div class="producto-imagen-container">
+        <img src="${producto.imagen}" class="producto-imagen base" alt="${producto.nombre}"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=Imagen+no+disponible'">
+        ${producto.imagenes && producto.imagenes[0] ? 
+          `<img src="${producto.imagenes[0]}" class="producto-imagen hover" alt="${producto.nombre}"
+               onerror="this.onerror=null; this.style.display='none'">` : ''}
+      </div>
+      <div class="producto-info">
+        <h3 class="producto-nombre">${producto.nombre}</h3>
+        <p class="producto-precio">$${producto.precio.toLocaleString('es-AR')}</p>
+        <button onclick="agregarAlCarrito(${producto.id})" class="btn">Agregar al carrito</button>
+      </div>
+    </div>
+  `).join('');
+}
   // Verificar si el contenedor existe
   if (!contenedor) {
     console.error('No se encontró el elemento con ID "productos"');
