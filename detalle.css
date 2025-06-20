@@ -1,0 +1,94 @@
+  <style>
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 15px 0;
+      color: #666;
+    }
+
+    .breadcrumb a {
+      color: var(--primario);
+      text-decoration: none;
+    }
+
+    /* Contenedor principal */
+    .detalle-producto {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 20px;
+    }
+
+    /* Galería */
+    .galeria-producto {
+      display: grid;
+      gap: 15px;
+    }
+
+    /* Info del producto */
+    .info-producto {
+      padding: 20px;
+    }
+
+    .precio {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .cantidad {
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .cantidad input {
+      width: 60px;
+      padding: 8px;
+      margin-left: 10px;
+    }
+
+    .btn-agregar {
+      background: var(--primario);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .stock {
+      color: green;
+      margin-bottom: 25px;
+    }
+
+    .envio {
+      margin-bottom: 30px;
+    }
+
+    .envio input {
+      padding: 10px;
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    .especificaciones {
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .detalle-producto {
+        grid-template-columns: 1fr;
+      }
+    }
+.imagen-principal {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+  </style>
