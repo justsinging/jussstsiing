@@ -102,7 +102,13 @@ body {
   background: #8c1221;
   transform: none; /* Elimina el efecto de escala si lo había */
 }
+.producto-imagen-container {
+  transition: transform 0.3s ease;
+}
 
+.producto-imagen-container:hover {
+  transform: scale(1.02);
+}
 /* CARRITO LATERAL - VERSIÓN MEJORADA */
 .cart-sidebar {
   position: fixed;
@@ -275,10 +281,4 @@ body {
     right: 0;
   }
 }
-.producto-imagen-container {
-  transition: transform 0.3s ease;
-}
 
-.producto-imagen-container:hover {
-  transform: scale(1.02);
-}
