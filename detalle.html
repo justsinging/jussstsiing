@@ -4,97 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalle del Producto - JustSing</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&family=Piazzolla:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"> <!-- Asegúrate de incluir tu CSS principal -->
   <link rel="stylesheet" href="detalle.css">
-
 </head>
 <body>
-  <div class="breadcrumb">
-    <a href="index.html">Inicio</a> > 
-    <a href="productos.html">Productos</a> > 
-    <span>Bolsa Mujer</span>
-  </div>
+  <!-- Header igual al index -->
+  <header class="store-header">
+    <div class="store-title">JustSing</div>
+    <button class="cart-button" onclick="toggleCart()">
+      🛒 <span id="cart-count" class="cart-count">0</span>
+    </button>
+  </header>
 
-  <div class="detalle-producto">
-    <div class="galeria-producto" id="galeria-producto">
-      <!-- Las imágenes se cargarán dinámicamente -->
+  <!-- Carrito lateral (igual al index) -->
+  <aside id="carrito" class="cart-sidebar">
+    <button class="cart-close" onclick="toggleCart()">✖</button>
+    <h2>Carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <p>Total: $<span id="total">0</span></p>
+    <div class="cart-actions">
+      <button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
+      <button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
     </div>
-    
-    <div class="info-producto">
-      <h1 id="nombre-producto">Bolsa Mujer</h1>
-      <p class="precio" id="precio-producto">$16.500,00</p>
-      
-      <div class="cantidad">
-        <span>Cantidad:</span>
-        <input type="number" value="1" min="1" id="cantidad-producto">
-      </div>
-      
-      <button class="btn-agregar" id="btn-agregar">Agregar al carrito</button>
-      
-      <div class="stock" id="stock-producto">1 en stock</div>
-      
-      <div class="envio">
-        <h3>Medios de envío</h3>
-        <input type="text" placeholder="Tu código postal" id="codigo-postal">
-        <button id="calcular-envio">Calcular</button>
-        <a href="#">No sé mi código postal</a>
-      </div>
-      
-      <div class="especificaciones" id="especificaciones-producto">
-        <h3>Especificaciones</h3>
-        <!-- Los detalles se cargarán dinámicamente -->
-      </div>
-    </div>
-  </div>
+  </aside>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Obtener ID del producto de la URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const productId = urlParams.get('id');
+  <main class="detalle-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a> > 
+      <a href="productos.html">Productos</a> > 
+      <span id="nombre-breadcrumb">Producto</span>
+    </div>
+
+    <!-- Galería mejorada con flechas -->
+    <div class="detalle-producto">
+      <div class="galeria-producto">
+        <button class="flecha flecha-izquierda" onclick="cambiarImagen(-1)">‹</button>
+        
+        <div class="contenedor-imagen">
+          <img id="imagen-principal" class="imagen-principal" src="" alt="">
+        </div>
+        
+        <button class="flecha flecha-derecha" onclick="cambiarImagen(1)">›</button>
+        
+        <div id="galeria-miniaturas" class="miniaturas"></div>
+      </div>
       
-      // Obtener productos del localStorage
-      const productos = JSON.parse(localStorage.getItem('productos')) || [];
-      const producto = productos.find(p => p.id == productId);
-      
-      if (producto) {
-        // Actualizar datos básicos
-        document.querySelector('.breadcrumb span').textContent = producto.nombre;
-        document.getElementById('nombre-producto').textContent = producto.nombre;
-        document.getElementById('precio-producto').textContent = `$${producto.precio.toLocaleString('es-AR')}`;
-        
-        // Cargar imágenes
-        const galeria = document.getElementById('galeria-producto');
-        galeria.innerHTML = '';
-        
-        // Crear imagen principal
-        const imgPrincipal = document.createElement('img');
-        imgPrincipal.src = producto.imagen;
-        imgPrincipal.alt = producto.nombre;
-        imgPrincipal.className = 'imagen-principal';
-        galeria.appendChild(imgPrincipal);
-        
-        // Cargar especificaciones
-        const especificaciones = document.getElementById('especificaciones-producto');
-        if (producto.descripcion) {
-          const lineas = producto.descripcion.split('\n');
-          lineas.forEach(linea => {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>${linea.split(':')[0]}:</strong> ${linea.split(':').slice(1).join(':')}`;
-            especificaciones.appendChild(p);
-          });
-        }
-      } else {
-        document.body.innerHTML = `
-          <div style="padding: 20px; text-align: center;">
-            <h2>Producto no encontrado</h2>
-            <button onclick="window.location.href='index.html'" style="padding: 10px 20px;">
-              Volver a la tienda
-            </button>
-          </div>
-        `;
-      }
-    });
-  </script>
+      <!-- Resto del contenido... -->
+    </div>
+  </main>
+
+  <script src="main.js"></script> <!-- Asegúrate de incluir el JS principal -->
+  <script src="detalle.js"></script>
 </body>
 </html>
