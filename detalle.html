@@ -1,146 +1,186 @@
-<link rel="stylesheet" href="detalle.css">
-<div class="breadcrumb">
-  <a href="index.html">Inicio</a> > 
-  <a href="productos.html">Productos</a> > 
-  <span>Bolsa Mujer</span>
-</div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Producto - JustSing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detalle.css">
+  <style>
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 15px 0;
+      color: #666;
+    }
 
-<div class="detalle-producto">
-  <div class="galeria-producto">
-    <!-- Aquí van las imágenes del producto -->
-  </div>
-  
-  <div class="info-producto">
-    <h1>Bolsa Mujer</h1>
-    <p class="precio">$16.500,00</p>
-    
-    <div class="cantidad">
-      <span>Cantidad:</span>
-      <input type="number" value="1" min="1">
-    </div>
-    
-    <button class="btn-agregar">Agregar al carrito</button>
-    
-    <div class="stock">1 en stock</div>
-    
-    <div class="envio">
-      <h3>Medios de envío</h3>
-      <input type="text" placeholder="Tu código postal">
-      <button>Calcular</button>
-      <a href="#">No sé mi código postal</a>
-    </div>
-    
-    <div class="especificaciones">
-      <h3>Especificaciones</h3>
-      <p><strong>Medidas:</strong> 25cm x 29cm</p>
-      <p><strong>Telas:</strong> Tusor Mostaza</p>
-      <p><strong>Cinta:</strong> Algodón natural</p>
-    </div>
-  </div>
-</div>
+    .breadcrumb a {
+      color: var(--primario);
+      text-decoration: none;
+    }
 
-<style>
-/* Breadcrumb */
-.breadcrumb {
-  padding: 15px 0;
-  color: #666;
-}
+    /* Contenedor principal */
+    .detalle-producto {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 20px;
+    }
 
-.breadcrumb a {
-  color: var(--primario);
-  text-decoration: none;
-}
+    /* Galería */
+    .galeria-producto {
+      display: grid;
+      gap: 15px;
+    }
 
-/* Contenedor principal */
-.detalle-producto {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-top: 20px;
-}
+    /* Info del producto */
+    .info-producto {
+      padding: 20px;
+    }
 
-/* Galería */
-.galeria-producto {
-  display: grid;
-  gap: 15px;
-}
+    .precio {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 20px 0;
+    }
 
-/* Info del producto */
-.info-producto {
-  padding: 20px;
-}
+    .cantidad {
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+    }
 
-.precio {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin: 20px 0;
-}
+    .cantidad input {
+      width: 60px;
+      padding: 8px;
+      margin-left: 10px;
+    }
 
-.cantidad {
-  margin: 20px 0;
-  display: flex;
-  align-items: center;
-}
+    .btn-agregar {
+      background: var(--primario);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 15px;
+    }
 
-.cantidad input {
-  width: 60px;
-  padding: 8px;
-  margin-left: 10px;
-}
+    .stock {
+      color: green;
+      margin-bottom: 25px;
+    }
 
-.btn-agregar {
-  background: var(--primario);
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  font-size: 1rem;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom: 15px;
-}
+    .envio {
+      margin-bottom: 30px;
+    }
 
-.stock {
-  color: green;
-  margin-bottom: 25px;
-}
+    .envio input {
+      padding: 10px;
+      width: 200px;
+      margin-right: 10px;
+    }
 
-.envio {
-  margin-bottom: 30px;
-}
+    .especificaciones {
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
 
-.envio input {
-  padding: 10px;
-  width: 200px;
-  margin-right: 10px;
-}
-
-.especificaciones {
-  border-top: 1px solid #eee;
-  padding-top: 20px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .detalle-producto {
-    grid-template-columns: 1fr;
-  }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .detalle-producto {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
-<script>
-}
-document.addEventListener('DOMContentLoaded', () => {
-  // Obtener ID del producto de la URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('id');
-  
-  // Buscar el producto en tus datos
-  const producto = productos.find(p => p.id == productId);
-  
-  if (producto) {
-    // Actualizar el DOM con los datos del producto
-    document.querySelector('.breadcrumb span').textContent = producto.nombre;
-    document.querySelector('.info-producto h1').textContent = producto.nombre;
-    document.querySelector('.precio').textContent = `$${producto.precio.toLocaleString('es-AR')}`;
-    // ... completar con los demás datos
-  }
-});
-</script>
+</head>
+<body>
+  <div class="breadcrumb">
+    <a href="index.html">Inicio</a> > 
+    <a href="productos.html">Productos</a> > 
+    <span>Bolsa Mujer</span>
+  </div>
+
+  <div class="detalle-producto">
+    <div class="galeria-producto" id="galeria-producto">
+      <!-- Las imágenes se cargarán dinámicamente -->
+    </div>
+    
+    <div class="info-producto">
+      <h1 id="nombre-producto">Bolsa Mujer</h1>
+      <p class="precio" id="precio-producto">$16.500,00</p>
+      
+      <div class="cantidad">
+        <span>Cantidad:</span>
+        <input type="number" value="1" min="1" id="cantidad-producto">
+      </div>
+      
+      <button class="btn-agregar" id="btn-agregar">Agregar al carrito</button>
+      
+      <div class="stock" id="stock-producto">1 en stock</div>
+      
+      <div class="envio">
+        <h3>Medios de envío</h3>
+        <input type="text" placeholder="Tu código postal" id="codigo-postal">
+        <button id="calcular-envio">Calcular</button>
+        <a href="#">No sé mi código postal</a>
+      </div>
+      
+      <div class="especificaciones" id="especificaciones-producto">
+        <h3>Especificaciones</h3>
+        <!-- Los detalles se cargarán dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Obtener ID del producto de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+      
+      // Obtener productos del localStorage
+      const productos = JSON.parse(localStorage.getItem('productos')) || [];
+      const producto = productos.find(p => p.id == productId);
+      
+      if (producto) {
+        // Actualizar datos básicos
+        document.querySelector('.breadcrumb span').textContent = producto.nombre;
+        document.getElementById('nombre-producto').textContent = producto.nombre;
+        document.getElementById('precio-producto').textContent = `$${producto.precio.toLocaleString('es-AR')}`;
+        
+        // Cargar imágenes
+        const galeria = document.getElementById('galeria-producto');
+        galeria.innerHTML = '';
+        
+        // Crear imagen principal
+        const imgPrincipal = document.createElement('img');
+        imgPrincipal.src = producto.imagen;
+        imgPrincipal.alt = producto.nombre;
+        imgPrincipal.className = 'imagen-principal';
+        galeria.appendChild(imgPrincipal);
+        
+        // Cargar especificaciones
+        const especificaciones = document.getElementById('especificaciones-producto');
+        if (producto.descripcion) {
+          const lineas = producto.descripcion.split('\n');
+          lineas.forEach(linea => {
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${linea.split(':')[0]}:</strong> ${linea.split(':').slice(1).join(':')}`;
+            especificaciones.appendChild(p);
+          });
+        }
+      } else {
+        document.body.innerHTML = `
+          <div style="padding: 20px; text-align: center;">
+            <h2>Producto no encontrado</h2>
+            <button onclick="window.location.href='index.html'" style="padding: 10px 20px;">
+              Volver a la tienda
+            </button>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
