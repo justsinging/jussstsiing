@@ -16,7 +16,7 @@ const productos = [
     imagenes: ["https://i.imgur.com/RTeouUR.jpeg"],
     descripcion: "Medidas: 46x33 cm\nTelas: Tusor Gris Oscuro\nCinta: Algodón Natural"
   },
-    {
+  {
     id: 3,
     nombre: "Bolsa 13",
     precio: 13000,
@@ -56,7 +56,6 @@ const productos = [
     imagenes: ["https://i.imgur.com/DzJc6iO.jpeg"],
     descripcion: "Medidas: 31x29 cm\nTelas: Tusor Mostaza\nCinta: Algodón Natural"
   }
-  // ... (otros productos)
 ];
 
 // Variables globales
@@ -70,6 +69,7 @@ if (!localStorage.getItem('productos')) {
   localStorage.setItem('productos', JSON.stringify(productos));
 }
 
+// Función para renderizar productos
 function renderizarProductos() {
   const contenedor = document.getElementById('productos');
   if (!contenedor) return;
@@ -103,7 +103,129 @@ function renderizarProductos() {
   `).join('');
 }
 
-// ... (resto de las funciones del carrito se mantienen igual)
+// Funciones del carrito
+function agregarAlCarrito(id) {
+  const productosGuardados = JSON.parse(localStorage.getItem('productos')) || [];
+  const producto = productosGuardados.find(p => p.id === id);
+  
+  if (!producto) {
+    mostrarNotificacion('Producto no encontrado');
+    return;
+  }
+
+  const existe = carrito.find(item => item.id === id);
+
+  if (existe) {
+    existe.cantidad++;
+  } else {
+    carrito.push({...producto, cantidad: 1});
+  }
+
+  actualizarCarrito();
+  mostrarNotificacion(`${producto.nombre} agregado al carrito`);
+}
+
+function actualizarCarrito() {
+  if (!listaCarrito || !totalSpan || !cartCount) return;
+
+  listaCarrito.innerHTML = '';
+  let total = 0;
+
+  carrito.forEach(item => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      ${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toLocaleString('es-AR')}
+      <button onclick="eliminarDelCarrito(${item.id})">❌</button>
+    `;
+    listaCarrito.appendChild(li);
+    total += item.precio * item.cantidad;
+  });
+
+  totalSpan.textContent = total.toLocaleString('es-AR');
+  cartCount.textContent = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+function eliminarDelCarrito(id) {
+  carrito = carrito.filter(item => item.id !== id);
+  actualizarCarrito();
+}
+
+function vaciarCarrito() {
+  carrito = [];
+  actualizarCarrito();
+}
+
+// Funciones de UI
+function mostrarNotificacion(mensaje) {
+  const noti = document.getElementById('notificacion');
+  if (!noti) return;
+  
+  noti.textContent = mensaje;
+  noti.style.display = 'block';
+  setTimeout(() => noti.style.display = 'none', 2000);
+}
+
+function toggleCart() {
+  const carritoElement = document.getElementById('carrito');
+  if (carritoElement) carritoElement.classList.toggle('open');
+}
+
+function mostrarEnvio() {
+  const formEnvio = document.getElementById('form-envio-section');
+  const carritoElement = document.getElementById('carrito');
+  if (formEnvio && carritoElement) {
+    formEnvio.style.display = 'block';
+    carritoElement.classList.remove('open');
+  }
+}
+
+function volverAEnvio() {
+  const seccionResumen = document.getElementById('seccion-resumen');
+  const formEnvio = document.getElementById('form-envio-section');
+  if (seccionResumen && formEnvio) {
+    seccionResumen.style.display = 'none';
+    formEnvio.style.display = 'block';
+  }
+}
+
+function mostrarPago() {
+  const seccionResumen = document.getElementById('seccion-resumen');
+  const seccionPago = document.getElementById('seccion-pago');
+  if (seccionResumen && seccionPago) {
+    seccionResumen.style.display = 'none';
+    seccionPago.style.display = 'block';
+  }
+}
+
+function irAlInicio() {
+  window.location.href = 'index.html';
+}
+
+// Configurar Mercado Pago
+function configurarMercadoPago() {
+  const mp = new MercadoPago('TEST-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', {
+    locale: 'es-AR'
+  });
+
+  const btnPagar = document.getElementById('btn-pagar');
+  if (!btnPagar) return;
+
+  btnPagar.addEventListener('click', function() {
+    const preference = {
+      items: carrito.map(item => ({
+        title: item.nombre,
+        unit_price: item.precio,
+        quantity: item.cantidad
+      }))
+    };
+
+    mp.checkout({
+      preference: preference,
+      autoOpen: true
+    });
+  });
+}
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
@@ -116,15 +238,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formEnvio) {
       formEnvio.addEventListener('submit', function(e) {
         e.preventDefault();
-        document.getElementById('form-envio-section').style.display = 'none';
-        document.getElementById('seccion-resumen').style.display = 'block';
+        const formEnvioSection = document.getElementById('form-envio-section');
+        const seccionResumen = document.getElementById('seccion-resumen');
+        if (formEnvioSection && seccionResumen) {
+          formEnvioSection.style.display = 'none';
+          seccionResumen.style.display = 'block';
+        }
         
         const formData = new FormData(this);
         let envioHTML = '';
         for (let [key, value] of formData.entries()) {
           envioHTML += `<p><strong>${key}:</strong> ${value}</p>`;
         }
-        document.getElementById('detalle-envio').innerHTML = envioHTML;
+        
+        const detalleEnvio = document.getElementById('detalle-envio');
+        if (detalleEnvio) detalleEnvio.innerHTML = envioHTML;
         
         const resumenCarrito = document.getElementById('resumen-carrito');
         if (resumenCarrito) {
@@ -136,7 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
         
-        document.getElementById('resumen-total').textContent = totalSpan.textContent;
+        const resumenTotal = document.getElementById('resumen-total');
+        if (resumenTotal) resumenTotal.textContent = totalSpan.textContent;
       });
     }
 
@@ -150,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Funciones globales
+// Hacer funciones disponibles globalmente
 window.agregarAlCarrito = agregarAlCarrito;
 window.eliminarDelCarrito = eliminarDelCarrito;
 window.vaciarCarrito = vaciarCarrito;
