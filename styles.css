@@ -24,34 +24,30 @@ body {
   padding: 20px;
 }
 
-/* GRID DE PRODUCTOS - VERSIÓN MEJORADA */
+/* Modifica la sección de productos en tu styles.css */
 #productos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
+  gap: 30px;
   margin-top: 30px;
 }
 
 .producto {
-  background: white;
-  border-radius: 0;
-  overflow: hidden;
-  box-shadow: var(--sombra);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: transparent; /* Elimina el fondo blanco */
   display: flex;
   flex-direction: column;
-}
-
-.producto:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  align-items: center; /* Centra todo el contenido */
+  text-align: center; /* Alinea el texto al centro */
+  padding: 0;
+  box-shadow: none; /* Elimina la sombra */
 }
 
 .producto-imagen-container {
-  position: relative;
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
+  margin-bottom: 15px;
+  border-radius: 0; /* Esquinas cuadradas si lo prefieres */
 }
 
 .producto-imagen {
@@ -61,26 +57,12 @@ body {
   transition: opacity 0.4s ease;
 }
 
-.producto-imagen.hover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-}
-
-.producto-imagen-container:hover .producto-imagen.hover {
-  opacity: 1;
-}
-
-.producto-imagen-container:hover .producto-imagen.base {
-  opacity: 0;
-}
-
 .producto-info {
-  padding: 15px;
+  width: 100%;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  align-items: center; /* Centra el contenido */
 }
 
 .producto-nombre {
@@ -88,6 +70,7 @@ body {
   margin: 0 0 8px 0;
   color: var(--primario);
   font-weight: 600;
+  width: 100%;
 }
 
 .producto-precio {
@@ -95,23 +78,29 @@ body {
   font-weight: bold;
   margin: 0 0 15px 0;
   color: var(--texto);
+  width: 100%;
 }
 
 .producto .btn {
-  margin-top: auto;
-  width: 100%;
-  padding: 10px;
+  width: auto; /* Ancho automático en lugar del 100% */
+  padding: 10px 25px;
   background: var(--primario);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
   transition: background 0.3s ease;
 }
 
+/* Opcional: Efecto hover más sutil */
+.producto-imagen-container:hover .producto-imagen.base {
+  opacity: 0.9;
+}
+
 .producto .btn:hover {
   background: #8c1221;
+  transform: none; /* Elimina el efecto de escala si lo había */
 }
 
 /* CARRITO LATERAL - VERSIÓN MEJORADA */
