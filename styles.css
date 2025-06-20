@@ -148,6 +148,42 @@ body {
 .producto-imagen-container:hover .producto-imagen.hover {
   opacity: 1;
 }
+/* Estilos para los enlaces de producto */
+.producto-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+}
+
+.producto-link:hover {
+  text-decoration: none;
+}
+
+/* Ajuste para el contenedor de imágenes */
+.producto-imagen-container {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Asegurar que el hover de imágenes siga funcionando */
+.producto-link:hover .producto-imagen.base {
+  opacity: 0;
+}
+
+.producto-link:hover .producto-imagen.hover {
+  opacity: 1;
+}
+
+/* Estilo para el título del producto */
+.producto-nombre {
+  transition: color 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.producto-link:hover .producto-nombre {
+  color: var(--primario);
+}
 /* CARRITO LATERAL - VERSIÓN MEJORADA */
 .cart-sidebar {
   position: fixed;
