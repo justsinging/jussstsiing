@@ -69,10 +69,13 @@ if (!localStorage.getItem('productos')) {
   localStorage.setItem('productos', JSON.stringify(productos));
 }
 
-// Función para renderizar productos (versión mejorada)
+// Función para renderizar productos
 function renderizarProductos() {
   const contenedor = document.getElementById('productos');
-  if (!contenedor) return;
+  if (!contenedor) {
+    console.error('No se encontró el contenedor de productos');
+    return;
+  }
 
   const productosGuardados = JSON.parse(localStorage.getItem('productos')) || [];
   
@@ -94,41 +97,6 @@ function renderizarProductos() {
         <h3 class="producto-nombre">${producto.nombre}</h3>
         <p class="producto-precio">$${producto.precio.toLocaleString('es-AR')}</p>
         <button onclick="agregarAlCarrito(${producto.id})" class="btn">Agregar al carrito</button>
-      </div>
-    </div>
-  `).join('');
-}
-  // Verificar si el contenedor existe
-  if (!contenedor) {
-    console.error('No se encontró el elemento con ID "productos"');
-    return;
-  }
-
-  // Obtener productos de localStorage
-  const productosGuardados = JSON.parse(localStorage.getItem('productos')) || [];
-  
-  // Verificar si hay productos
-  if (productosGuardados.length === 0) {
-    contenedor.innerHTML = '<p class="no-products">No hay productos disponibles</p>';
-    return;
-  }
-
-  // Generar HTML para los productos
-  contenedor.innerHTML = productosGuardados.map(producto => `
-    <div class="producto">
-      <div class="producto-content">
-        <a href="detalle.html?id=${producto.id}" class="producto-imagen-container">
-          <img src="${producto.imagen}" class="producto-imagen base" alt="${producto.nombre}" 
-               onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=Imagen+no+disponible'">
-          ${producto.imagenes && producto.imagenes[0] ? 
-            `<img src="${producto.imagenes[0]}" class="producto-imagen hover" alt="${producto.nombre} - Vista detalle"
-                 onerror="this.onerror=null; this.style.display='none'">` : ''}
-        </a>
-        <div class="producto-info">
-          <h3>${producto.nombre}</h3>
-          <p class="producto-precio">$${producto.precio}</p>
-          <button onclick="agregarAlCarrito(${producto.id})" class="btn">Agregar al carrito</button>
-        </div>
       </div>
     </div>
   `).join('');
@@ -157,20 +125,22 @@ function agregarAlCarrito(id) {
 }
 
 function actualizarCarrito() {
+  if (!listaCarrito || !totalSpan || !cartCount) return;
+
   listaCarrito.innerHTML = '';
   let total = 0;
 
   carrito.forEach(item => {
     const li = document.createElement('li');
     li.innerHTML = `
-      ${item.nombre} x${item.cantidad} - $${item.precio * item.cantidad}
+      ${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toLocaleString('es-AR')}
       <button onclick="eliminarDelCarrito(${item.id})">❌</button>
     `;
     listaCarrito.appendChild(li);
     total += item.precio * item.cantidad;
   });
 
-  totalSpan.textContent = total;
+  totalSpan.textContent = total.toLocaleString('es-AR');
   cartCount.textContent = carrito.reduce((sum, item) => sum + item.cantidad, 0);
   localStorage.setItem('carrito', JSON.stringify(carrito));
 }
@@ -188,13 +158,16 @@ function vaciarCarrito() {
 // Funciones de UI
 function mostrarNotificacion(mensaje) {
   const noti = document.getElementById('notificacion');
+  if (!noti) return;
+  
   noti.textContent = mensaje;
   noti.style.display = 'block';
   setTimeout(() => noti.style.display = 'none', 2000);
 }
 
 function toggleCart() {
-  document.getElementById('carrito').classList.toggle('open');
+  const carrito = document.getElementById('carrito');
+  if (carrito) carrito.classList.toggle('open');
 }
 
 function mostrarEnvio() {
@@ -222,7 +195,10 @@ function configurarMercadoPago() {
     locale: 'es-AR'
   });
 
-  document.getElementById('btn-pagar').addEventListener('click', function() {
+  const btnPagar = document.getElementById('btn-pagar');
+  if (!btnPagar) return;
+
+  btnPagar.addEventListener('click', function() {
     const preference = {
       items: carrito.map(item => ({
         title: item.nombre,
@@ -231,7 +207,6 @@ function configurarMercadoPago() {
       }))
     };
 
-    // En producción, aquí deberías hacer una llamada a tu backend
     mp.checkout({
       preference: preference,
       autoOpen: true
@@ -241,38 +216,50 @@ function configurarMercadoPago() {
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-  renderizarProductos();
-  actualizarCarrito();
+  try {
+    renderizarProductos();
+    actualizarCarrito();
 
-  // Configurar formulario de envío
-  document.getElementById('form-envio').addEventListener('submit', function(e) {
-    e.preventDefault();
-    document.getElementById('form-envio-section').style.display = 'none';
-    document.getElementById('seccion-resumen').style.display = 'block';
-    
-    // Mostrar datos de envío en el resumen
-    const formData = new FormData(this);
-    let envioHTML = '';
-    for (let [key, value] of formData.entries()) {
-      envioHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+    // Configurar formulario de envío
+    const formEnvio = document.getElementById('form-envio');
+    if (formEnvio) {
+      formEnvio.addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.getElementById('form-envio-section').style.display = 'none';
+        document.getElementById('seccion-resumen').style.display = 'block';
+        
+        // Mostrar datos de envío en el resumen
+        const formData = new FormData(this);
+        let envioHTML = '';
+        for (let [key, value] of formData.entries()) {
+          envioHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+        }
+        document.getElementById('detalle-envio').innerHTML = envioHTML;
+        
+        // Mostrar resumen del carrito
+        const resumenCarrito = document.getElementById('resumen-carrito');
+        if (resumenCarrito) {
+          resumenCarrito.innerHTML = '';
+          carrito.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toLocaleString('es-AR')}`;
+            resumenCarrito.appendChild(li);
+          });
+        }
+        
+        const resumenTotal = document.getElementById('resumen-total');
+        if (resumenTotal) resumenTotal.textContent = totalSpan.textContent;
+      });
     }
-    document.getElementById('detalle-envio').innerHTML = envioHTML;
-    
-    // Mostrar resumen del carrito
-    const resumenCarrito = document.getElementById('resumen-carrito');
-    resumenCarrito.innerHTML = '';
-    carrito.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = `${item.nombre} x${item.cantidad} - $${item.precio * item.cantidad}`;
-      resumenCarrito.appendChild(li);
-    });
-    
-    document.getElementById('resumen-total').textContent = totalSpan.textContent;
-  });
 
-  // Configurar Mercado Pago si está disponible
-  if (typeof MercadoPago !== 'undefined') {
-    configurarMercadoPago();
+    // Configurar Mercado Pago si está disponible
+    if (typeof MercadoPago !== 'undefined') {
+      configurarMercadoPago();
+    }
+  } catch (error) {
+    console.error('Error al inicializar:', error);
+    const contenedor = document.getElementById('productos') || document.body;
+    contenedor.innerHTML = '<p class="error">Error al cargar la página. Por favor recarga.</p>';
   }
 });
 
