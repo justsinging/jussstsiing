@@ -275,3 +275,10 @@ body {
     right: 0;
   }
 }
+.producto-imagen-container {
+  transition: transform 0.3s ease;
+}
+
+.producto-imagen-container:hover {
+  transform: scale(1.02);
+}
