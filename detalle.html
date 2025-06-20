@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalle del Producto - JustSing</title>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&family=Piazzolla:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css"> <!-- Asegúrate de incluir tu CSS principal -->
+  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="detalle.css">
 </head>
 <body>
-  <!-- Header igual al index -->
   <header class="store-header">
     <div class="store-title">JustSing</div>
     <button class="cart-button" onclick="toggleCart()">
@@ -17,7 +16,6 @@
     </button>
   </header>
 
-  <!-- Carrito lateral (igual al index) -->
   <aside id="carrito" class="cart-sidebar">
     <button class="cart-close" onclick="toggleCart()">✖</button>
     <h2>Carrito</h2>
@@ -30,32 +28,47 @@
   </aside>
 
   <main class="detalle-container">
-    <!-- Breadcrumb -->
     <div class="breadcrumb">
       <a href="index.html">Inicio</a> > 
       <a href="productos.html">Productos</a> > 
       <span id="nombre-breadcrumb">Producto</span>
     </div>
 
-    <!-- Galería mejorada con flechas -->
     <div class="detalle-producto">
       <div class="galeria-producto">
         <button class="flecha flecha-izquierda" onclick="cambiarImagen(-1)">‹</button>
-        
         <div class="contenedor-imagen">
           <img id="imagen-principal" class="imagen-principal" src="" alt="">
         </div>
-        
         <button class="flecha flecha-derecha" onclick="cambiarImagen(1)">›</button>
-        
         <div id="galeria-miniaturas" class="miniaturas"></div>
       </div>
       
-      <!-- Resto del contenido... -->
+      <div class="info-producto">
+        <h1 id="nombre-producto"></h1>
+        <p class="precio" id="precio-producto"></p>
+        <div class="cantidad">
+          <span>Cantidad:</span>
+          <input type="number" id="cantidad-producto" value="1" min="1">
+        </div>
+        <button class="btn-agregar" id="btn-agregar">Agregar al carrito</button>
+        <div class="stock" id="stock-producto">1 en stock</div>
+        <div class="envio">
+          <h3>Medios de envío</h3>
+          <div class="envio-input-container">
+            <input type="text" id="codigo-postal" placeholder="Tu código postal">
+            <button id="calcular-envio">Calcular</button>
+          </div>
+          <a href="#">No sé mi código postal</a>
+        </div>
+        <div class="especificaciones" id="especificaciones-producto">
+          <h3>Especificaciones</h3>
+        </div>
+      </div>
     </div>
   </main>
 
-  <script src="main.js"></script> <!-- Asegúrate de incluir el JS principal -->
+  <script src="main.js"></script>
   <script src="detalle.js"></script>
 </body>
 </html>
