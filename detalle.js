@@ -1,6 +1,25 @@
 // Variables para el producto
 let cantidad = 1;
 let productoActual = null;
+const params = new URLSearchParams(window.location.search);
+const id = parseInt(params.get('id'));
+
+const productos = JSON.parse(localStorage.getItem('productos')) || [];
+const producto = productos.find(p => p.id === id);
+
+if (!producto) {
+  document.getElementById('detalle-producto').innerHTML = '<p>Producto no encontrado</p>';
+} else {
+  document.getElementById('imagen-principal').src = producto.imagen;
+  document.getElementById('nombre-producto').textContent = producto.nombre;
+  document.getElementById('precio-producto').textContent = `$${producto.precio.toLocaleString()}`;
+  document.getElementById('stock-producto').textContent = `${producto.stock} en stock`;
+  document.getElementById('medidas').textContent = producto.medidas;
+  document.getElementById('telas').textContent = producto.telas;
+  document.getElementById('cinta').textContent = producto.cinta;
+  document.getElementById('nombre-breadcrumb').textContent = producto.nombre;
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // Obtener ID del producto de la URL
