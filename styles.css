@@ -298,3 +298,36 @@ body {
   20%, 60% { transform: translateX(-5px); }
   40%, 80% { transform: translateX(5px); }
 }
+/* MÉTODOS DE PAGO */
+.metodos-pago {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--gris-claro);
+}
+
+.metodos-pago h3 {
+  color: var(--primario);
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.iconos-pago {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.iconos-pago img {
+  width: 50px;
+  height: 30px;
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  background: white;
+  transition: transform 0.3s ease;
+}
+
+.iconos-pago img:hover {
+  transform: scale(1.1);
+  border-color: var(--primario);
+}
