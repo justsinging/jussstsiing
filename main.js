@@ -99,7 +99,6 @@ function renderizarProductos() {
   `).join('');
 }
 
-// Funciones del carrito
 function agregarAlCarrito(id) {
   const productosGuardados = JSON.parse(localStorage.getItem('productos')) || [];
   const producto = productosGuardados.find(p => p.id === id);
@@ -109,18 +108,35 @@ function agregarAlCarrito(id) {
     return;
   }
 
+  // Verificar si el producto ya está en el carrito
   const existe = carrito.find(item => item.id === id);
 
   if (existe) {
-    existe.cantidad++;
-  } else {
-    carrito.push({...producto, cantidad: 1});
+    // Mostrar notificación especial para productos de una sola unidad
+    mostrarNotificacionEspecial('Este producto tiene una sola unidad');
+    return; // Salir de la función sin agregar otra unidad
   }
 
+  // Si no existe, agregarlo al carrito con cantidad 1
+  carrito.push({...producto, cantidad: 1});
   actualizarCarrito();
   mostrarNotificacion(`${producto.nombre} agregado al carrito`);
 }
 
+// Nueva función para notificación especial
+function mostrarNotificacionEspecial(mensaje) {
+  const noti = document.getElementById('notificacion');
+  if (!noti) return;
+  
+  noti.textContent = mensaje;
+  noti.style.backgroundColor = '#ff9800'; // Color naranja para diferenciar
+  noti.style.display = 'block';
+  
+  setTimeout(() => {
+    noti.style.display = 'none';
+    noti.style.backgroundColor = 'var(--primario)'; // Volver al color original
+  }, 2000);
+}
 function actualizarCarrito() {
   if (!listaCarrito || !totalSpan || !cartCount) return;
 
