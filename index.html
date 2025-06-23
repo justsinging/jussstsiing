@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JustSing - Tienda de Bolsos</title>
+  <title>JustSing - Tienda de Bolsas</title>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
   <!-- Header -->
@@ -27,27 +26,18 @@
       <button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
       <button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
     </div>
-    <!-- Dentro del <aside id="carrito">, después de los botones existentes -->
-<div class="metodos-pago">
-  <h3>Métodos de pago</h3>
-  <div class="iconos-pago">
-    <img src="https://i.imgur.com/VKQVgvk.png" alt="Transferencia Mercado Pago/Bancaria" title="Transferencias">
-    <img src="https://i.imgur.com/7kQJbZP.png" alt="Tarjetas" title="Tarjetas de crédito/débito">
-  </div>
-</div>
+
+    <!-- Sección de métodos de pago (oculta inicialmente) -->
+    <div id="seccion-pagos" class="seccion-pagos" style="display: none;">
+      <h3>Elige tu método de pago</h3>
+      
+      <div class="opcion-pago" onclick="pagarConMercadoPago()">
+        <img src="https://i.imgur.com/VKQVgvk.png" alt="Mercado Pago">
+        <span>Transferencia Bancaria / Mercado Pago</span>
+      </div>
+      <button class="btn-volver" onclick="ocultarMetodosPago()">Volver al carrito</button>
+    </div>
   </aside>
-  <div id="modal-pago" class="modal">
-  <div class="modal-contenido">
-    <span class="cerrar-modal">&times;</span>
-    <h2>Información para pago</h2>
-    <div class="info-pago">
-      <h3>Transferencia Bancaria / Mercado Pago</h3>
-      <p><strong>CVU:</strong> 0000003100093480929286</p>
-      <p><strong>Alias:</strong> JustSing</p>
-      <p><strong>Titular:</strong> Just Sing</p>
-    <button class="btn-confirmar">Confirmar compra</button>
-  </div>
-</div>
 
   <!-- Contenido principal -->
   <main class="container">
@@ -60,6 +50,84 @@
   <!-- Notificación -->
   <div id="notificacion" class="notificacion"></div>
 
+  <!-- Modal para transferencia/efectivo -->
+  <div id="modal-pago" class="modal">
+    <div class="modal-contenido">
+      <span class="cerrar-modal" onclick="cerrarModalPago()">&times;</span>
+      <h2>Información para pago</h2>
+      <div class="info-pago">
+        <h3>Transferencia Bancaria</h3>
+        <p><strong>CVU:</strong> 0000003100093480929286</p>
+        <p><strong>Alias:</strong> JustSing</p>
+        <p><strong>Titular:</strong> Just Sing</p>
+        
+       
+      <button class="btn-confirmar" onclick="confirmarPagoManual()">Confirmar compra</button>
+    </div>
+  </div>
+
   <script src="main.js"></script>
+  
+  <script>
+    // Funciones específicas para el HTML
+    function mostrarEnvio() {
+      document.querySelector('.cart-actions').style.display = 'none';
+      document.getElementById('seccion-pagos').style.display = 'block';
+    }
+
+    function ocultarMetodosPago() {
+      document.querySelector('.cart-actions').style.display = 'block';
+      document.getElementById('seccion-pagos').style.display = 'none';
+    }
+
+    function pagarConMercadoPago() {
+      if (carrito.length === 0) {
+        mostrarNotificacion('El carrito está vacío');
+        return;
+      }
+
+      const mp = new MercadoPago('TU_PUBLIC_KEY_AQUÍ', {
+        locale: 'es-AR'
+      });
+
+      mp.checkout({
+        preference: {
+          items: carrito.map(item => ({
+            title: item.nombre,
+            unit_price: item.precio,
+            quantity: item.cantidad,
+          })),
+          back_urls: {
+            success: window.location.href,
+            failure: window.location.href,
+            pending: window.location.href
+          }
+        },
+        autoOpen: true
+      });
+    }
+
+    function mostrarModalPago() {
+      document.getElementById('modal-pago').style.display = 'block';
+    }
+
+    function cerrarModalPago() {
+      document.getElementById('modal-pago').style.display = 'none';
+    }
+
+    function confirmarPagoManual() {
+      mostrarNotificacion('Compra confirmada. Te contactaremos para coordinar el pago');
+      cerrarModalPago();
+      vaciarCarrito();
+      toggleCart();
+    }
+
+    // Cerrar modal al hacer clic fuera
+    window.addEventListener('click', function(event) {
+      if (event.target === document.getElementById('modal-pago')) {
+        cerrarModalPago();
+      }
+    });
+  </script>
 </body>
 </html>
