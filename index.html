@@ -3,103 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalle del Producto - JustSing</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&family=Piazzolla:wght@400;700&display=swap" rel="stylesheet">
+  <title>JustSing - Tienda de Bolsos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="detalle.css">
 </head>
 <body>
+  <!-- Header -->
   <header class="store-header">
-    <div class="store-title">JustSing</div>
+    <h1 class="store-title">JustSing</h1>
     <button class="cart-button" onclick="toggleCart()">
       🛒 <span id="cart-count" class="cart-count">0</span>
     </button>
   </header>
 
+  <!-- Carrito lateral -->
   <aside id="carrito" class="cart-sidebar">
     <button class="cart-close" onclick="toggleCart()">✖</button>
     <h2>Carrito</h2>
     <ul id="lista-carrito"></ul>
-    <p>Total: $<span id="total">0</span></p>
     <div class="cart-actions">
+      <p>Total: $<span id="total">0</span></p>
       <button class="btn-cart" onclick="vaciarCarrito()">Vaciar carrito</button>
       <button class="btn-cart" onclick="mostrarEnvio()">Continuar compra</button>
     </div>
   </aside>
 
-  <main class="detalle-container">
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-      <a href="index.html">Inicio</a> . 
-      <a href="productos.html">Productos</a> . 
-      <span id="nombre-breadcrumb">Bolsa Mujer</span>
-    </div>
-
-    <div class="detalle-producto">
-      <div class="galeria-producto">
-        <img id="imagen-principal" class="imagen-principal" src="" alt="">
-      </div>
-      
-      <div class="info-producto">
-        <h1 id="nombre-producto">Bolsa Mujer</h1>
-        <p class="precio" id="precio-producto">$16.500,00</p>
-        <div class="info-producto">
-        <h1 id="nombre-producto">Bolsa Mida</h1>
-        <p class="precio" id="precio-producto">$19.000,00</p>
-          <div class="info-producto">
-        <h1 id="nombre-producto">Bolsa 13</h1>
-        <p class="precio" id="precio-producto">$13.000,00</p>
-        <div class="detalle-link">
-          <a href="#" id="ver-detalles">Ver más detalles</a>
-        </div>
-        <div class="info-producto">
-        <h1 id="nombre-producto">Bolsa Lavanda</h1>
-        <p class="precio" id="precio-producto">$16.500,00</p>
-        <div class="unidad-info">
-          <div class="info-producto">
-        <h1 id="nombre-producto">Bolsa Florero</h1>
-        <p class="precio" id="precio-producto">$20.500,00</p>
-            <div class="info-producto">
-        <h1 id="nombre-producto">Bolsa Olivo</h1>
-        <p class="precio" id="precio-producto">$13.000,00</p>
-              <div class="info-producto">
-        <h1 id="nombre-producto">Bolsa Frutis</h1>
-        <p class="precio" id="precio-producto">$18.000,00</p>
-          <span>Una sola unidad</span>
-        </div>
-        
-        <div class="cantidad-container">
-          <div class="cantidad">
-            <button class="btn-cantidad" onclick="modificarCantidad(-1)">-</button>
-            <span id="cantidad">1</span>
-            <button class="btn-cantidad" onclick="modificarCantidad(1)">+</button>
-          </div>
-          <button class="btn-agregar" onclick="agregarAlCarrito()">Agregar al carrito</button>
-        </div>
-        
-        <div class="stock" id="stock-producto">1 en stock</div>
-        
-        <div class="envio">
-          <h3>Medios de envío</h3>
-          <div class="envio-input">
-            <input type="text" id="codigo-postal" placeholder="Tu código postal">
-            <button id="calcular-envio">Calcular</button>
-          </div>
-          <a href="#" class="link-codigo-postal">No sé mi código postal</a>
-        </div>
-        
-        <div class="especificaciones">
-          <h3>Especificaciones</h3>
-          <p><strong>Medidas:</strong> <span id="medidas">25cm x 29cm</span></p>
-          <p><strong>Telas:</strong></p>
-          <p id="telas">Tusor Mostaza</p>
-          <p><strong>Cinta:</strong> <span id="cinta">Algodón natural</span></p>
-        </div>
-      </div>
-    </div>
+  <!-- Contenido principal -->
+  <main class="container">
+    <h2>Nuestros Productos</h2>
+    <section id="productos">
+      <!-- Los productos se cargarán aquí con JavaScript -->
+    </section>
   </main>
 
+  <!-- Notificación -->
+  <div id="notificacion" class="notificacion"></div>
+
   <script src="main.js"></script>
-  <script src="detalle.js"></script>
 </body>
 </html>
