@@ -255,3 +255,42 @@ function iniciarPago() {
 
 // Modifica el botón "Continuar compra" en tu HTML para que llame a esta función:
 // <button class="btn-cart" onclick="iniciarPago()">Continuar compra</button>
+// Agrega estas funciones para manejar el modal
+function mostrarModalPago() {
+  document.getElementById('modal-pago').style.display = 'block';
+}
+
+function cerrarModalPago() {
+  document.getElementById('modal-pago').style.display = 'none';
+}
+
+// Event listeners (debes agregar esto al final de tu main.js)
+document.addEventListener('DOMContentLoaded', () => {
+  // ... tu código existente ...
+  
+  // Manejo del modal
+  document.querySelector('.cerrar-modal').addEventListener('click', cerrarModalPago);
+  document.querySelector('.btn-confirmar').addEventListener('click', () => {
+    mostrarNotificacion('Compra confirmada. Te contactaremos para coordinar el pago');
+    cerrarModalPago();
+    vaciarCarrito();
+  });
+  
+  // Cerrar modal haciendo click fuera del contenido
+  window.addEventListener('click', (event) => {
+    if (event.target === document.getElementById('modal-pago')) {
+      cerrarModalPago();
+    }
+  });
+});
+
+// Modifica tu función iniciarPago para alternativas:
+function iniciarPago() {
+  const metodo = confirm('¿Deseas pagar con Mercado Pago?\n(Cancelar para ver otras opciones)');
+  
+  if (metodo) {
+    // Código de Mercado Pago que mostré antes
+  } else {
+    mostrarModalPago();
+  }
+}
