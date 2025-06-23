@@ -127,7 +127,19 @@ function agregarAlCarrito(id) {
 function mostrarNotificacionEspecial(mensaje) {
   const noti = document.getElementById('notificacion');
   if (!noti) return;
+  function mostrarNotificacionEspecial(mensaje) {
+  const noti = document.getElementById('notificacion');
+  if (!noti) return;
   
+  noti.textContent = mensaje;
+  noti.classList.add('especial'); // Agregar clase especial
+  noti.style.display = 'block';
+  
+  setTimeout(() => {
+    noti.style.display = 'none';
+    noti.classList.remove('especial'); // Remover clase especial
+  }, 2000);
+}
   noti.textContent = mensaje;
   noti.style.backgroundColor = '#ff9800'; // Color naranja para diferenciar
   noti.style.display = 'block';
