@@ -218,3 +218,40 @@ window.eliminarDelCarrito = eliminarDelCarrito;
 window.vaciarCarrito = vaciarCarrito;
 window.toggleCart = toggleCart;
 window.mostrarEnvio = mostrarEnvio;
+
+// Agrega esta función para manejar el pago
+function iniciarPago() {
+  // Verificar si hay productos en el carrito
+  if (carrito.length === 0) {
+    mostrarNotificacion('Agrega productos al carrito primero');
+    return;
+  }
+
+  // Configuración de Mercado Pago (reemplaza con tu public key)
+  const mp = new MercadoPago('TEST-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', {
+    locale: 'es-AR'
+  });
+
+  // Crear preferencia de pago
+  const preference = {
+    items: carrito.map(item => ({
+      title: item.nombre,
+      unit_price: item.precio,
+      quantity: item.cantidad,
+    })),
+    back_urls: {
+      success: window.location.href,
+      failure: window.location.href,
+      pending: window.location.href
+    },
+    auto_return: "approved",
+  };
+
+  mp.checkout({
+    preference: preference,
+    autoOpen: true, // Abre directamente el checkout
+  });
+}
+
+// Modifica el botón "Continuar compra" en tu HTML para que llame a esta función:
+// <button class="btn-cart" onclick="iniciarPago()">Continuar compra</button>
