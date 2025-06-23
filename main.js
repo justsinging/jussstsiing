@@ -83,19 +83,15 @@ function renderizarProductos() {
 
   contenedor.innerHTML = productosGuardados.map(producto => `
     <div class="producto">
-      <a href="detalle.html?id=${producto.id}" class="producto-link">
-        <div class="producto-imagen-container">
-          <img src="${producto.imagen}" class="producto-imagen base" alt="${producto.nombre}"
-               onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=Imagen+no+disponible'">
-          ${producto.imagenes && producto.imagenes[0] ? 
-            `<img src="${producto.imagenes[0]}" class="producto-imagen hover" alt="${producto.nombre}"
-                 onerror="this.onerror=null; this.style.display='none'">` : ''}
-        </div>
-      </a>
+      <div class="producto-imagen-container">
+        <img src="${producto.imagen}" class="producto-imagen base" alt="${producto.nombre}"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=Imagen+no+disponible'">
+        ${producto.imagenes && producto.imagenes[0] ? 
+          `<img src="${producto.imagenes[0]}" class="producto-imagen hover" alt="${producto.nombre}"
+               onerror="this.onerror=null; this.style.display='none'">` : ''}
+      </div>
       <div class="producto-info">
-        <a href="detalle.html?id=${producto.id}" class="producto-link">
-          <h3 class="producto-nombre">${producto.nombre}</h3>
-        </a>
+        <h3 class="producto-nombre">${producto.nombre}</h3>
         <p class="producto-precio">$${producto.precio.toLocaleString('es-AR')}</p>
         <button onclick="agregarAlCarrito(${producto.id})" class="btn">Agregar al carrito</button>
       </div>
@@ -172,59 +168,8 @@ function toggleCart() {
 }
 
 function mostrarEnvio() {
-  const formEnvio = document.getElementById('form-envio-section');
-  const carritoElement = document.getElementById('carrito');
-  if (formEnvio && carritoElement) {
-    formEnvio.style.display = 'block';
-    carritoElement.classList.remove('open');
-  }
-}
-
-function volverAEnvio() {
-  const seccionResumen = document.getElementById('seccion-resumen');
-  const formEnvio = document.getElementById('form-envio-section');
-  if (seccionResumen && formEnvio) {
-    seccionResumen.style.display = 'none';
-    formEnvio.style.display = 'block';
-  }
-}
-
-function mostrarPago() {
-  const seccionResumen = document.getElementById('seccion-resumen');
-  const seccionPago = document.getElementById('seccion-pago');
-  if (seccionResumen && seccionPago) {
-    seccionResumen.style.display = 'none';
-    seccionPago.style.display = 'block';
-  }
-}
-
-function irAlInicio() {
-  window.location.href = 'index.html';
-}
-
-// Configurar Mercado Pago
-function configurarMercadoPago() {
-  const mp = new MercadoPago('TEST-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', {
-    locale: 'es-AR'
-  });
-
-  const btnPagar = document.getElementById('btn-pagar');
-  if (!btnPagar) return;
-
-  btnPagar.addEventListener('click', function() {
-    const preference = {
-      items: carrito.map(item => ({
-        title: item.nombre,
-        unit_price: item.precio,
-        quantity: item.cantidad
-      }))
-    };
-
-    mp.checkout({
-      preference: preference,
-      autoOpen: true
-    });
-  });
+  // Aquí iría la lógica para mostrar el formulario de envío
+  alert('Funcionalidad de envío se implementará aquí');
 }
 
 // Inicialización
@@ -232,46 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
   try {
     renderizarProductos();
     actualizarCarrito();
-
-    // Configurar formulario de envío
-    const formEnvio = document.getElementById('form-envio');
-    if (formEnvio) {
-      formEnvio.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formEnvioSection = document.getElementById('form-envio-section');
-        const seccionResumen = document.getElementById('seccion-resumen');
-        if (formEnvioSection && seccionResumen) {
-          formEnvioSection.style.display = 'none';
-          seccionResumen.style.display = 'block';
-        }
-        
-        const formData = new FormData(this);
-        let envioHTML = '';
-        for (let [key, value] of formData.entries()) {
-          envioHTML += `<p><strong>${key}:</strong> ${value}</p>`;
-        }
-        
-        const detalleEnvio = document.getElementById('detalle-envio');
-        if (detalleEnvio) detalleEnvio.innerHTML = envioHTML;
-        
-        const resumenCarrito = document.getElementById('resumen-carrito');
-        if (resumenCarrito) {
-          resumenCarrito.innerHTML = '';
-          carrito.forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = `${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toLocaleString('es-AR')}`;
-            resumenCarrito.appendChild(li);
-          });
-        }
-        
-        const resumenTotal = document.getElementById('resumen-total');
-        if (resumenTotal) resumenTotal.textContent = totalSpan.textContent;
-      });
-    }
-
-    if (typeof MercadoPago !== 'undefined') {
-      configurarMercadoPago();
-    }
   } catch (error) {
     console.error('Error al inicializar:', error);
     const contenedor = document.getElementById('productos') || document.body;
@@ -285,6 +190,3 @@ window.eliminarDelCarrito = eliminarDelCarrito;
 window.vaciarCarrito = vaciarCarrito;
 window.toggleCart = toggleCart;
 window.mostrarEnvio = mostrarEnvio;
-window.volverAEnvio = volverAEnvio;
-window.mostrarPago = mostrarPago;
-window.irAlInicio = irAlInicio;
